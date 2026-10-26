@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>A B C · 指路投票</title>
+<style>
+:root{font-family:"Avenir Next","PingFang TC","Microsoft JhengHei",Arial,sans-serif;color:#183f40;background:#e6eeea}*{box-sizing:border-box}body{margin:0;padding:24px 18px;max-width:600px;margin:auto}h1{font-size:26px;margin:8px 0}p{line-height:1.6}#mission{font-size:23px;font-weight:700}#round{color:#6a7d68}button{font:inherit;touch-action:manipulation;cursor:pointer}#choices{display:grid;gap:14px;margin:24px 0}button[data-choice]{display:flex;align-items:center;gap:18px;min-height:100px;text-align:left;padding:18px;background:white;border:3px solid #d4e1da;border-radius:14px;color:#183f40;font-size:21px;font-weight:700}button b{display:grid;place-items:center;min-width:50px;height:50px;background:#e6f0e8;color:#247c72;border-radius:10px;font-size:30px}button small{display:block;font-size:16px;font-weight:400;margin-top:6px}button.selected{border-color:#247c72;background:#e1eee4}button.selected b{background:#247c72;color:white}button:disabled{cursor:default;opacity:.5}button.selected:disabled{opacity:1}button:focus-visible{outline:4px solid #f4be44;outline-offset:3px}#status{min-height:74px;background:white;border-left:5px solid #247c72;padding:14px 16px;font-size:18px;line-height:1.6}footer{font-size:14px;color:#6a7d68;line-height:1.7}#retry{border:1px solid #8aa6b8;border-radius:6px;padding:10px 16px;background:white;color:#183f40;margin:10px 0}
+button[data-choice="A"]{background:#eef0f9}button[data-choice="A"] b{background:#6b7fa4;color:white}button[data-choice="B"]{background:#e6f0e8}button[data-choice="B"] b{background:#247c72;color:white}button[data-choice="C"]{background:#f9eee4}button[data-choice="C"] b{background:#c66e56;color:white}button[data-choice].selected{border-color:#183f40;box-shadow:0 0 0 3px #edc55b}h1{font-size:32px;letter-spacing:-1px}#status{border-radius:12px}button[data-choice]{box-shadow:0 4px 0 #183f4010;border-width:2px;border-radius:17px}</style></head><body>
+<h1>Pela cidade.</h1><p>Qual é o caminho? 先討論，再投一票。</p><div id="mission">正在加入課堂…</div><p id="round">等老師開始投票。</p>
+<div id="choices">
+<button data-choice="A" disabled><b>A</b><span>↶ Vire à esquerda.<small>左轉 · 原地轉向</small></span></button>
+<button data-choice="B" disabled><b>B</b><span>↑ Siga em frente.<small>前進 · 下一個路口</small></span></button>
+<button data-choice="C" disabled><b>C</b><span>↷ Vire à direita.<small>右轉 · 原地轉向</small></span></button>
+</div><div id="status" role="status" aria-live="polite">等老師開新一輪。</div><button id="retry" hidden>重新連接</button>
+<footer><p>每個瀏覽器保留一票，截止前可以改票。<br>人物會喺老師確認後行動。請望白板討論路線。</p></footer>
+<script>
+'use strict';
+let current=null,busy=false,disconnected=false;
+const buttons=Array.from(document.querySelectorAll('[data-choice]'));
+function render(data){
+ current=data;disconnected=false;
+ const target={escola:'à escola',museu:'ao museu',mercado:'ao mercado',biblioteca:'à biblioteca',jardim:'ao jardim',cafe:'ao café',banco:'ao banco',cinema:'ao cinema',hospital:'ao hospital',farmacia:'à farmácia'}[data.state.target];
+ document.querySelector('#mission').textContent=target?'Vamos '+target+'.':'Vamos explorar a cidade!';
+ const open=data.mode==='devices'&&data.round?.open;
+ document.querySelector('#round').textContent=open?'第 '+data.round.id+' 輪 · 投票中':data.round?'第 '+data.round.id+' 輪已截止':'等老師開始投票。';
+ buttons.forEach(b=>{b.disabled=!open||busy;b.classList.toggle('selected',data.myChoice===b.dataset.choice);b.setAttribute('aria-pressed',String(data.myChoice===b.dataset.choice));});
+ document.querySelector('#status').textContent=open?(data.myChoice?'已投 '+data.myChoice+'。截止前可以改票。':'今次應該點行？揀 A、B 或 C。'):data.state.arrived?data.state.last:data.round?data.state.last:'等老師開新一輪。';
+ document.querySelector('#retry').hidden=true;
+}
+async function poll(){
+ try{const r=await fetch('/api/student',{cache:'no-store'});const j=await r.json();if(!r.ok)throw new Error(j.error);if(!busy)render(j);}
+ catch(e){disconnected=true;buttons.forEach(b=>b.disabled=true);document.querySelector('#status').textContent=e.message==='Failed to fetch'?'連線中斷，請檢查 Wi-Fi。':e.message;document.querySelector('#retry').hidden=false;}
+}
+buttons.forEach(b=>b.onclick=async()=>{
+ if(busy||disconnected||!current?.round?.open)return;
+ busy=true;buttons.forEach(x=>x.disabled=true);
+ try{const r=await fetch('/api/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({roundId:current.round.id,choice:b.dataset.choice})});const j=await r.json();if(!r.ok)throw new Error(j.error);busy=false;render(j);}
+ catch(e){busy=false;document.querySelector('#status').textContent=e.message;await poll();}
+});
+document.querySelector('#retry').onclick=poll;
+poll();setInterval(poll,1000);
+</script></body></html>

@@ -1,0 +1,9 @@
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.html text eol=lf
+*.js text eol=lf
+*.cjs text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.command text eol=lf
