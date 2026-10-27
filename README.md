@@ -76,6 +76,14 @@ node tests/browser.cjs  # 需要 playwright 與 Chromium；可用 PLAYWRIGHT_MOD
 
 示範由同一起點面向上方出發。Siga em frente 的一小段距離是本練習的操作設定；一般說話仍可按情境補充終點。動畫沿路口順序行進，支援減少動態效果設定。活動與成績只在當前頁面暫存，不收集學生姓名。
 
-Atravesse a rua na passadeira 使用獨立行人線情境；Atravesse o cruzamento 會在地圖上穿過路口。「聽一次」只在裝置有 pt-PT 歐洲葡語聲線時使用，否則提示由老師讀。
+Atravesse a rua na passadeira 使用獨立行人線情境；Atravesse o cruzamento 會在地圖上穿過路口。「聽一次」使用內置 pt-PT 合成朗讀音檔。
 
 對應紙本在工作區同層 ../ficha-construir-frases，未放進公開倉庫。學生版兩頁，教師版三頁（含解答和教學提示），使用練習地圖及同一組句子。
+
+## 語用情境及歐洲葡語朗讀
+
+「情境對話」有八個語用任務：開口問路、請求重複、請求講慢、確認資料、追問距離、道謝、回應道謝及迷路求助。學生選合適的回應，答錯可再試；答中後顯示 A/B 四回合對話，可收起葡文跟中文提示角色扮演。這些是獨立口語情境，並非主地圖的完整路線。
+
+內置六十四段 Joana（pt-PT）合成朗讀音檔，涵蓋全部指令、三十六句練習和語用對話。可聽單句、各選項或整段對話，切換慢速及停止；主地圖 A/B/C 旁亦有朗讀按鈕。網站由 assets/audio 載入，離線單檔直接嵌入同一組音檔，毋須安裝聲線、登入或 API key。音量由裝置控制。音檔來源及重建方式見 assets/audio/README.md。
+
+新增對應一頁 A4 紙本在 ../ficha-conversar：學生版一頁，教師答案及聆聽稿一頁；Word 和 PDF 均保留本機，未放進公開倉庫。

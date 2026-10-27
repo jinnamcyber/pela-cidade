@@ -9,15 +9,21 @@ shared={
  '/*STYLE*/':(root/'src/style.css').read_text(),
  '/*ENGINE*/':(root/'src/engine.js').read_text(),
  '/*INSTRUCTIONS*/':(root/'src/instructions.js').read_text(),
+ '/*PRAGMATICS*/':(root/'src/pragmatics.js').read_text(),
+ '/*PRAGMATICS_APP*/':(root/'src/pragmatics-app.js').read_text(),
+ '/*AUDIO_APP*/':(root/'src/audio-app.js').read_text(),
  '/*LEARNING*/':(root/'src/learning.js').read_text(),
  '/*LEARNING_APP*/':(root/'src/learning-app.js').read_text(),
  '/*APP*/':(root/'src/app.js').read_text(),
  '/*LANGUAGE_APP*/':(root/'src/language-app.js').read_text(),
 }
+audio_manifest=json.loads((root/'assets/audio/manifest.json').read_text())
 for offline in (True,False):
     html=template
     image_uri=data_image if offline else lambda name:'assets/'+name
+    audio={phrase:('data:audio/mp4;base64,'+base64.b64encode((root/path).read_bytes()).decode() if offline else path) for phrase,path in audio_manifest.items()}
     replacements={**shared,
+        '/*AUDIO_MANIFEST*/':json.dumps(audio,ensure_ascii=False),
         '/*MAP_IMAGES*/':json.dumps({'worksheet':image_uri('mapa-worksheet-3d.png'),'city':image_uri('mapa-city-3d.png')}),
         '/*PAWN_URI*/':image_uri('traveler-3d.png'),
     }

@@ -1,0 +1,16 @@
+(function(root){
+'use strict';
+const scenes=[
+ {id:'open',title:'向陌生人開口',context:'你想向一位唔識嘅成年人問圖書館喺邊。先引起對方注意，再講清楚想問咩。',lead:'Bom dia. Posso ajudar?',options:['De nada!','Desculpe, onde fica a biblioteca?','Muito obrigado pela ajuda!'],correct:1,why:'Desculpe 先有禮貌咁引起注意；onde fica 問地點。',reply:'Siga em frente e vire na primeira rua à direita.',end:'Muito obrigado pela ajuda!',cues:['打招呼，問圖書館喺邊','向前，第一條街右轉','多謝幫忙']},
+ {id:'repeat',title:'聽唔清楚',context:'對方講咗指路方法，但你聽唔清楚。請佢再講一次。',lead:'Vire na segunda rua à direita.',options:['Pode repetir, por favor?','De nada!','Até logo!'],correct:0,why:'Pode repetir, por favor? 請對方重複；por favor 令請求更有禮貌。',reply:'Claro. Vire na segunda rua à direita.',end:'Agora percebi. Muito obrigado!',cues:['請對方重複','再講一次：第二條街右轉','表示明白，多謝']},
+ {id:'slower',title:'對方講得太快',context:'你聽得見，但跟唔切對方講嘢嘅速度。想佢講慢啲。',lead:'Siga em frente, vire à esquerda e continue até ao fim da rua.',options:['Fica longe daqui?','Muito obrigado!','Pode falar mais devagar, por favor?'],correct:2,why:'mais devagar 係慢啲。講清楚需要，對方先知點幫你。',reply:'Claro. Siga em frente. Depois, vire à esquerda.',end:'Obrigado. Agora percebi.',cues:['請對方講慢啲','慢慢再講指令','表示而家明白']},
+ {id:'confirm',title:'確認轉邊條街',context:'你大概明白，想確認係咪第二條右街。',lead:'Vire na segunda rua à direita.',options:['É na segunda rua à direita?','Há um café aqui perto?','De nada!'],correct:0,why:'重述關鍵資料，再用問句確認，可以避免轉錯街。',reply:'Sim, é na segunda rua à direita.',end:'Muito obrigado!',cues:['確認：第二條街右轉？','確認：係第二條','多謝']},
+ {id:'distance',title:'追問遠唔遠',context:'對方已經講咗方向。你想決定行路去定搭車，想問距離。',lead:'O hospital fica no fim desta rua.',options:['Pode repetir, por favor?','Fica longe daqui?','Vire à direita.'],correct:1,why:'Fica longe daqui? 問離呢度遠唔遠；唔係再問方向。',reply:'Não, fica aqui perto. Pode ir a pé.',end:'Está bem. Muito obrigado!',cues:['追問距離','回答：近，可以行路去','回應，多謝']},
+ {id:'thanks',title:'接受幫忙後道謝',context:'你已經明白點去目的地。離開之前，多謝幫你嗰個人。',lead:'A biblioteca fica à direita, no fim da rua.',options:['Onde fica o hospital?','Pode repetir?','Muito obrigado pela ajuda!'],correct:2,why:'pela ajuda 說明多謝對方嘅幫助。女同學可講 Muito obrigada。',reply:'De nada. Boa viagem!',end:'Até logo!',cues:['多謝幫忙','回應：唔使客氣','道別']},
+ {id:'welcome',title:'回應對方嘅多謝',context:'你已經幫人指路，對方向你道謝。自然咁回應佢。',lead:'Muito obrigado pela ajuda!',options:['De nada!','Não percebi.','Onde fica a escola?'],correct:0,why:'De nada 回應多謝，意思係唔使客氣。',reply:'Até logo!',end:'Até logo!',cues:['回應：唔使客氣','道別','道別']},
+ {id:'help',title:'迷路，請人幫忙',context:'你唔知自己喺邊，想請人幫你搵醫院。',lead:'Bom dia. Está tudo bem?',options:['De nada!','Desculpe, preciso de ajuda. Onde fica o hospital?','Boa viagem!'],correct:1,why:'先講 preciso de ajuda，然後講清楚要去邊。',reply:'Siga em frente até ao cruzamento e vire à esquerda.',end:'Muito obrigado pela ajuda!',cues:['請求幫忙，問醫院喺邊','行到路口，再左轉','多謝幫忙']}
+];
+function choose(id,index){const s=scenes.find(s=>s.id===id);if(!s)return {ok:false,message:'先揀一個情境。'};return index===s.correct?{ok:true,message:s.why}:{ok:false,message:'再諗下：呢個情境最需要做咩？揀一句切合需要嘅回應。'};}
+function dialogue(id){const s=scenes.find(s=>s.id===id);return s?[{role:'B',text:s.lead},{role:'A',text:s.options[s.correct]},{role:'B',text:s.reply},{role:'A',text:s.end}]:[];}
+const api={scenes,choose,dialogue};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.MapPragmatics=api;
+})(typeof globalThis!=='undefined'?globalThis:this);

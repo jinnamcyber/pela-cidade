@@ -66,7 +66,7 @@ function renderSentence(){
 }
 function resetSentence(){chosen=[];checked=false;renderSentence();feedback('點詞塊，按次序砌一句。');}
 $('#sentence-class').onclick=()=>{renderSentence();$('#sentence-dialog').showModal();};
-taskSelect.onchange=()=>{taskIndex=Number(taskSelect.value);resetSentence();};
+taskSelect.onchange=()=>{if(window.LessonAudio)LessonAudio.stop();taskIndex=Number(taskSelect.value);resetSentence();};
 $('#sentence-group').onchange=()=>{filterTasks();resetSentence();};
 $('#with-model').onclick=()=>{model=true;renderSentence();};
 $('#without-model').onclick=()=>{model=false;resetSentence();};
@@ -75,12 +75,6 @@ $('#sentence-reset').onclick=resetSentence;
 $('#sentence-check').onclick=()=>{const result=I.check(task().id,chosen);checked=result.ok;renderSentence();feedback(result.message,result.ok);};
 $('#sentence-next').onclick=()=>{const options=Array.from(taskSelect.options).map(o=>Number(o.value));taskIndex=options[(options.indexOf(taskIndex)+1)%options.length];resetSentence();};
 $('#sentence-demo').onclick=()=>{if(!checked||!task().command)return;if(task().command==='crosswalk'){showCrosswalk();return;}window.previewSentence(task().command);};
-$('#sentence-listen').onclick=()=>{
- if(!('speechSynthesis' in window)){feedback('呢個瀏覽器冇語音功能，請老師讀一次。');return;}
- const voices=speechSynthesis.getVoices(),voice=voices.find(v=>v.lang.toLowerCase()==='pt-pt');
- if(!voice){feedback('呢部裝置未有歐洲葡語聲線，請老師讀一次。');return;}
- speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(task().phrase);u.lang='pt-PT';u.voice=voice;u.rate=.8;speechSynthesis.speak(u);
-};
 function showCrosswalk(){
  const art=$('#facing img').src;$('.crosswalk-pawn').style.backgroundImage=`url("${art}")`;
  $('#crosswalk-dialog').showModal();

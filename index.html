@@ -24,6 +24,12 @@ aside{margin-top:14px;background:var(--paper);padding:23px;border-radius:24px;bo
 @media(min-width:851px) and (max-height:780px){.sentence-dialog{padding:20px;max-height:94dvh}.sentence-dialog .lesson-title>span{font-size:11px}.sentence-dialog h2{font-size:25px;margin-bottom:5px}.lesson-tabs{margin:10px 0 14px;padding-bottom:8px}.lesson-map{max-width:550px}.lesson-map-caption{margin-bottom:8px}#explore-hint{margin:6px 0 9px}.explore-choice{padding-top:7px;padding-bottom:7px}.explore-choice[aria-pressed=true]{padding-top:6px;padding-bottom:6px}#explore-meaning{margin:9px 0;min-height:34px}#predict-phrase{min-height:72px;margin-bottom:13px}#predict-feedback{min-height:62px;margin-top:13px}.lesson-map-column{align-self:center}}
 button.lesson-marker{padding:0;min-height:0;line-height:1;cursor:pointer}button.lesson-marker:hover:not(:disabled){background:var(--marker-color);outline:3px solid #f3d477}button.lesson-marker:disabled{opacity:1;cursor:default}button.lesson-marker:focus-visible{outline:3px solid #f3d477;outline-offset:2px}
 @media(max-width:650px){.lesson-map{max-height:none}}
+/* Spoken Portuguese and pragmatic choices share the classroom stage. */
+#lesson-pragmatic[hidden],#pragmatic-model[hidden]{display:none}.audio-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:-3px 0 5px}.audio-tools button{min-height:34px;font-size:12px;padding:5px 12px}.audio-tools label{display:flex;align-items:center;gap:4px;font-size:12px}.audio-tools>span{font-size:10px;color:#71836c}#audio-status{font-size:11px;line-height:1.5;min-height:17px;margin:0 0 8px;color:#456e5c}.listen-command{align-self:center;min-width:29px;min-height:34px;padding:4px 6px;font-size:12px;color:#54735f;background:transparent;border-color:#d2decd}.pragmatic-heading{display:flex;align-items:center;gap:12px;margin:12px 0}.pragmatic-heading label{font-size:12px}.pragmatic-heading select{flex:1;min-width:0;font-size:16px}#pragmatic-context{font-size:16px;font-weight:650;line-height:1.8;max-width:58em}.pragmatic-conversation{background:#e8eee2;padding:16px 20px;border-radius:14px;position:relative}.pragmatic-conversation>span{font-size:11px;color:#627a5b}.pragmatic-conversation p{font-size:24px;font-weight:800;margin:7px 0 13px;line-height:1.5}.pragmatic-conversation button{font-size:12px;min-height:33px}.pragmatic-option-row{display:flex;gap:8px;margin:8px 0}.pragmatic-option{flex:1;text-align:left;min-width:0;padding:13px 16px;background:#fff;font-size:18px;line-height:1.5;border-color:#cbdac3}.pragmatic-option.correct{background:#dfefdb;border:2px solid #397b56;opacity:1}.response-listen{min-width:44px;color:#476c56}.speaking{outline:3px solid #d3ae4e;outline-offset:2px}#pragmatic-feedback{min-height:32px;font-size:14px;line-height:1.8;color:#865f37}#pragmatic-feedback.correct{color:#26713c}#pragmatic-model{margin:16px 0;padding:16px;background:#eff3e9;border-radius:14px}.dialogue-label{font-size:12px;margin-bottom:12px;color:#66805e}.dialogue-line{display:flex;align-items:baseline;gap:14px;margin:9px 0;padding:10px 14px;border-radius:10px;background:#fff;max-width:85%;font-size:18px;line-height:1.5}.dialogue-line b{font-size:12px;color:#6b825f}.dialogue-line.role-A{margin-left:auto;background:#dcebe2}.pragmatic-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.pragmatic-actions button{font-size:12px}#pragmatic-next{max-width:260px}.lesson-tabs{flex-wrap:wrap}.sentence-dialog .lesson-tabs button{font-size:13px;padding:8px 13px}
+@media(max-width:650px){.sentence-dialog .lesson-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px}.sentence-dialog .lesson-tabs button{font-size:12px}.pragmatic-heading{flex-direction:column;align-items:stretch;gap:5px}#pragmatic-context{font-size:14px}.pragmatic-conversation p{font-size:20px}.pragmatic-option{font-size:16px;padding:10px}.dialogue-line{font-size:16px;max-width:95%}.audio-tools{gap:7px}.audio-tools>span{display:none}}
+#audio-status:empty{min-height:0;margin-bottom:0}.utility .board-audio-stop{font-size:10px;color:#365c47;white-space:nowrap}.utility .board-audio-stop[hidden]{display:none}
+#lesson-pragmatic{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 24px;align-items:start}#lesson-pragmatic[hidden],#pragmatic-options[hidden]{display:none}.pragmatic-heading{flex-direction:column;align-items:stretch;gap:6px;margin-top:0}#pragmatic-context{font-size:14px;margin:12px 0;line-height:1.8}.pragmatic-response h3{margin:0 0 14px;font-size:19px}.pragmatic-conversation p{font-size:22px}.pragmatic-option{font-size:17px}#pragmatic-model{margin:0;padding:13px}.dialogue-line{font-size:17px;padding:9px 11px;margin:8px 0;gap:10px}#pragmatic-next{grid-column:1/-1}.pragmatic-response #pragmatic-feedback{margin-top:12px}.pragmatic-response .note{font-size:11px;margin-bottom:0}
+@media(max-width:700px){#lesson-pragmatic{grid-template-columns:1fr;gap:8px}.pragmatic-response h3{margin-top:4px}#pragmatic-context{font-size:14px}.pragmatic-option,.dialogue-line{font-size:16px}}
 </style></head>
 <body>
 <header>
@@ -64,7 +70,8 @@ button.lesson-marker{padding:0;min-height:0;line-height:1;cursor:pointer}button.
 <dialog id="commands-dialog" class="learning-dialog"><button class="close" data-close aria-label="關閉">×</button><h2>一句指令，一個行動</h2><p class="learning-lead">揀一句，先讀出嚟，再睇旅人點行。</p><div class="choice-config"><h3>全班今次投邊三句？</h3><div id="choice-selectors"></div><button id="save-choices" class="primary">用呢三句做 A／B／C</button><p>更換指令會結束當前投票。向前數第幾條街時，所在路口唔計。</p></div><div id="instruction-bank"></div></dialog>
 <dialog id="sentence-dialog" class="learning-dialog sentence-dialog"><button class="close" data-close aria-label="關閉">×</button>
 <div class="lesson-title"><span>Oficina de frases</span><h2>睇得明，講得出，行得到</h2></div>
-<div class="lesson-tabs" role="tablist" aria-label="學習活動"><button role="tab" data-lesson-tab="explore" aria-selected="true" aria-controls="lesson-explore">換句試行</button><button role="tab" data-lesson-tab="predict" aria-selected="false" aria-controls="lesson-predict">估下停邊</button><button role="tab" data-lesson-tab="build" aria-selected="false" aria-controls="lesson-build">砌句練習 · 36 句</button></div>
+<div class="lesson-tabs" role="tablist" aria-label="學習活動"><button role="tab" data-lesson-tab="explore" aria-selected="true" aria-controls="lesson-explore">換句試行</button><button role="tab" data-lesson-tab="predict" aria-selected="false" aria-controls="lesson-predict">估下停邊</button><button role="tab" data-lesson-tab="build" aria-selected="false" aria-controls="lesson-build">砌句練習 · 36 句</button><button role="tab" data-lesson-tab="pragmatic" aria-selected="false" aria-controls="lesson-pragmatic">情境對話</button></div>
+<div class="audio-tools"><button id="lesson-listen">▶ 聽呢句</button><label><input type="checkbox" id="audio-slow"> 慢一點</label><button id="audio-stop">停止</button><span>歐洲葡語</span></div><p id="audio-status" role="status" aria-live="polite"></p>
 <div id="lesson-visual">
  <div class="lesson-map-column"><div class="lesson-map-caption"><strong id="lesson-map-title">同一起點，唔同指令</strong><span>練習地圖 · 面向上方出發</span></div>
  <div class="lesson-map"><img id="lesson-art" alt="練習城市地圖，旅人由下方 Rua Central 起點面向上方出發。"><canvas id="lesson-trail" width="1566" height="950" aria-hidden="true"></canvas><div id="lesson-markers"></div><span class="lesson-road road-first">Rua do Jardim · 第 1 條</span><span class="lesson-road road-second">Rua do Mercado · 第 2 條</span><span class="lesson-road road-third">Rua do Museu · 第 3 條</span><span class="lesson-start">起點</span><div id="lesson-pawn" aria-label="旅人"><span class="lesson-facing">↑</span><img alt="" id="lesson-traveler"></div></div>
@@ -72,7 +79,7 @@ button.lesson-marker{padding:0;min-height:0;line-height:1;cursor:pointer}button.
  <section id="lesson-explore" role="tabpanel"><label class="activity-label" for="explore-group">今次比較咩？</label><select id="explore-group"></select><p id="explore-hint" class="note"></p><div id="ordinal-builder" hidden><p>換一格，造新句</p><div class="phrase-frame"><span>Vire na</span><select id="ordinal-number" aria-label="第幾條街"><option value="first">primeira</option><option value="second">segunda</option><option value="third">terceira</option></select><span>rua</span><select id="ordinal-direction" aria-label="轉向邊邊"><option value="right">à direita</option><option value="left">à esquerda</option></select><span>.</span></div><p id="ordinal-phrase" lang="pt-PT"></p></div><div id="explore-choices"></div><p id="explore-meaning"></p><div class="explore-actions"><button id="explore-play" class="primary">行一次</button><button id="explore-compare">比較三句</button></div><p class="note">每句都由同一起點示範。先讀，再行，再換一句。</p></section>
  <section id="lesson-predict" role="tabpanel" hidden><div class="challenge-progress"><span id="predict-progress"></span><span id="predict-score"></span></div><h3>聽到呢句，會停喺 A、B 定 C？</h3><p id="predict-phrase" lang="pt-PT"></p><div id="predict-options" aria-label="選擇停點"></div><p id="predict-feedback" role="status" aria-live="polite"></p><button id="predict-reveal">睇提示</button><button id="predict-next" class="primary" disabled>下一題</button><p class="note">可先舉 A／B／C 卡，再由一位同學按答案。</p></section>
 </div>
-<section id="lesson-build" role="tabpanel" hidden><div class="sentence-settings"><label for="sentence-group">句子種類</label><select id="sentence-group"><option value="all">全部例句</option><option value="move">帶路指令</option><option value="ask">問路同求助</option><option value="place">描述位置</option></select><label for="sentence-task">今次想講咩？</label><select id="sentence-task"></select><div class="scaffold-toggle"><button id="with-model" aria-pressed="true">睇例句砌</button><button id="without-model" aria-pressed="false">自己砌</button></div></div><div class="sentence-prompt" id="sentence-prompt"></div><div id="sentence-model"></div><p id="sentence-context" class="note"></p><div id="sentence-answer" aria-label="已砌嘅句子"></div><div id="word-bank" aria-label="可選詞塊"></div><div class="sentence-tools"><button id="sentence-undo">撤回一格</button><button id="sentence-reset">重新砌</button><button id="sentence-listen">聽一次</button></div><p id="sentence-feedback" role="status" aria-live="polite">點詞塊，按次序砌一句。</p><div class="sentence-actions"><button id="sentence-check" class="primary">核對句子</button><button id="sentence-demo" disabled>由起點試行</button><button id="sentence-next">下一句</button></div><p class="note">先揀詞 → 讀畀同學聽 → 試行 → 寫返落紙。示範會喺教室地圖由起點出發，主地圖保留原本進度。</p></section></dialog>
+<section id="lesson-build" role="tabpanel" hidden><div class="sentence-settings"><label for="sentence-group">句子種類</label><select id="sentence-group"><option value="all">全部例句</option><option value="move">帶路指令</option><option value="ask">問路同求助</option><option value="place">描述位置</option></select><label for="sentence-task">今次想講咩？</label><select id="sentence-task"></select><div class="scaffold-toggle"><button id="with-model" aria-pressed="true">睇例句砌</button><button id="without-model" aria-pressed="false">自己砌</button></div></div><div class="sentence-prompt" id="sentence-prompt"></div><div id="sentence-model"></div><p id="sentence-context" class="note"></p><div id="sentence-answer" aria-label="已砌嘅句子"></div><div id="word-bank" aria-label="可選詞塊"></div><div class="sentence-tools"><button id="sentence-undo">撤回一格</button><button id="sentence-reset">重新砌</button><button id="sentence-listen">聽一次</button></div><p id="sentence-feedback" role="status" aria-live="polite">點詞塊，按次序砌一句。</p><div class="sentence-actions"><button id="sentence-check" class="primary">核對句子</button><button id="sentence-demo" disabled>由起點試行</button><button id="sentence-next">下一句</button></div><p class="note">先揀詞 → 讀畀同學聽 → 試行 → 寫返落紙。示範會喺教室地圖由起點出發，主地圖保留原本進度。</p></section><section id="lesson-pragmatic" role="tabpanel" hidden><div class="pragmatic-brief"><div class="pragmatic-heading"><label for="pragmatic-scene">今次遇到咩情況？</label><select id="pragmatic-scene"></select></div><p id="pragmatic-context"></p><div class="pragmatic-conversation"><span>對方講</span><p id="pragmatic-lead" lang="pt-PT"></p><button id="pragmatic-lead-listen">▶ 聽對方講</button></div><p id="pragmatic-feedback" role="status" aria-live="polite"></p></div><div class="pragmatic-response"><h3 id="pragmatic-response-title">你會點回應？</h3><div id="pragmatic-options"></div><div id="pragmatic-model" hidden><div class="dialogue-label">A 你　 B 對方</div><div id="pragmatic-dialogue"></div><div class="pragmatic-actions"><button id="pragmatic-play">▶ 聽完整對話</button><button id="pragmatic-hide">收起葡文，自己講</button></div><p class="note">兩人輪流做 A 同 B。先用例句，再收起葡文跟中文提示講。</p></div></div><button id="pragmatic-next" class="primary">下一個情境</button></section></dialog>
 <dialog id="crosswalk-dialog" class="learning-dialog"><button class="close" data-close aria-label="關閉">×</button><h2>Atravesse a rua na passadeira.</h2><p>喺行人線由路邊行去對面。</p><div class="crosswalk-scene"><div class="crossing-road"></div><div class="zebra"></div><div class="crosswalk-pawn"></div><span class="pavement-label">passeio</span><span class="passadeira-label">passadeira</span></div><button id="crosswalk-play" class="primary">示範過馬路</button><p class="note">呢個係行人線情境示範；唔會改變城市地圖上嘅路線。</p></dialog>
 <script type="application/json" id="map-images">{"worksheet": "assets/mapa-worksheet-3d.png", "city": "assets/mapa-city-3d.png"}</script><script>/* Shared by the offline board and the classroom server. No external dependencies. */
 (function(root){
@@ -358,6 +365,22 @@ function answer(questionId,index){const q=questions.find(q=>q.id===questionId);r
 const api={groups,origin,result,points,explain,questions,answer};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.MapLearning=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
+</script><script>(function(root){
+'use strict';
+const scenes=[
+ {id:'open',title:'向陌生人開口',context:'你想向一位唔識嘅成年人問圖書館喺邊。先引起對方注意，再講清楚想問咩。',lead:'Bom dia. Posso ajudar?',options:['De nada!','Desculpe, onde fica a biblioteca?','Muito obrigado pela ajuda!'],correct:1,why:'Desculpe 先有禮貌咁引起注意；onde fica 問地點。',reply:'Siga em frente e vire na primeira rua à direita.',end:'Muito obrigado pela ajuda!',cues:['打招呼，問圖書館喺邊','向前，第一條街右轉','多謝幫忙']},
+ {id:'repeat',title:'聽唔清楚',context:'對方講咗指路方法，但你聽唔清楚。請佢再講一次。',lead:'Vire na segunda rua à direita.',options:['Pode repetir, por favor?','De nada!','Até logo!'],correct:0,why:'Pode repetir, por favor? 請對方重複；por favor 令請求更有禮貌。',reply:'Claro. Vire na segunda rua à direita.',end:'Agora percebi. Muito obrigado!',cues:['請對方重複','再講一次：第二條街右轉','表示明白，多謝']},
+ {id:'slower',title:'對方講得太快',context:'你聽得見，但跟唔切對方講嘢嘅速度。想佢講慢啲。',lead:'Siga em frente, vire à esquerda e continue até ao fim da rua.',options:['Fica longe daqui?','Muito obrigado!','Pode falar mais devagar, por favor?'],correct:2,why:'mais devagar 係慢啲。講清楚需要，對方先知點幫你。',reply:'Claro. Siga em frente. Depois, vire à esquerda.',end:'Obrigado. Agora percebi.',cues:['請對方講慢啲','慢慢再講指令','表示而家明白']},
+ {id:'confirm',title:'確認轉邊條街',context:'你大概明白，想確認係咪第二條右街。',lead:'Vire na segunda rua à direita.',options:['É na segunda rua à direita?','Há um café aqui perto?','De nada!'],correct:0,why:'重述關鍵資料，再用問句確認，可以避免轉錯街。',reply:'Sim, é na segunda rua à direita.',end:'Muito obrigado!',cues:['確認：第二條街右轉？','確認：係第二條','多謝']},
+ {id:'distance',title:'追問遠唔遠',context:'對方已經講咗方向。你想決定行路去定搭車，想問距離。',lead:'O hospital fica no fim desta rua.',options:['Pode repetir, por favor?','Fica longe daqui?','Vire à direita.'],correct:1,why:'Fica longe daqui? 問離呢度遠唔遠；唔係再問方向。',reply:'Não, fica aqui perto. Pode ir a pé.',end:'Está bem. Muito obrigado!',cues:['追問距離','回答：近，可以行路去','回應，多謝']},
+ {id:'thanks',title:'接受幫忙後道謝',context:'你已經明白點去目的地。離開之前，多謝幫你嗰個人。',lead:'A biblioteca fica à direita, no fim da rua.',options:['Onde fica o hospital?','Pode repetir?','Muito obrigado pela ajuda!'],correct:2,why:'pela ajuda 說明多謝對方嘅幫助。女同學可講 Muito obrigada。',reply:'De nada. Boa viagem!',end:'Até logo!',cues:['多謝幫忙','回應：唔使客氣','道別']},
+ {id:'welcome',title:'回應對方嘅多謝',context:'你已經幫人指路，對方向你道謝。自然咁回應佢。',lead:'Muito obrigado pela ajuda!',options:['De nada!','Não percebi.','Onde fica a escola?'],correct:0,why:'De nada 回應多謝，意思係唔使客氣。',reply:'Até logo!',end:'Até logo!',cues:['回應：唔使客氣','道別','道別']},
+ {id:'help',title:'迷路，請人幫忙',context:'你唔知自己喺邊，想請人幫你搵醫院。',lead:'Bom dia. Está tudo bem?',options:['De nada!','Desculpe, preciso de ajuda. Onde fica o hospital?','Boa viagem!'],correct:1,why:'先講 preciso de ajuda，然後講清楚要去邊。',reply:'Siga em frente até ao cruzamento e vire à esquerda.',end:'Muito obrigado pela ajuda!',cues:['請求幫忙，問醫院喺邊','行到路口，再左轉','多謝幫忙']}
+];
+function choose(id,index){const s=scenes.find(s=>s.id===id);if(!s)return {ok:false,message:'先揀一個情境。'};return index===s.correct?{ok:true,message:s.why}:{ok:false,message:'再諗下：呢個情境最需要做咩？揀一句切合需要嘅回應。'};}
+function dialogue(id){const s=scenes.find(s=>s.id===id);return s?[{role:'B',text:s.lead},{role:'A',text:s.options[s.correct]},{role:'B',text:s.reply},{role:'A',text:s.end}]:[];}
+const api={scenes,choose,dialogue};if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.MapPragmatics=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
 </script><script>'use strict';
 const E=MapEngine,I=MapInstructions,$=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
 const mapImages=JSON.parse($('#map-images').textContent);
@@ -550,7 +573,7 @@ function renderSentence(){
 }
 function resetSentence(){chosen=[];checked=false;renderSentence();feedback('點詞塊，按次序砌一句。');}
 $('#sentence-class').onclick=()=>{renderSentence();$('#sentence-dialog').showModal();};
-taskSelect.onchange=()=>{taskIndex=Number(taskSelect.value);resetSentence();};
+taskSelect.onchange=()=>{if(window.LessonAudio)LessonAudio.stop();taskIndex=Number(taskSelect.value);resetSentence();};
 $('#sentence-group').onchange=()=>{filterTasks();resetSentence();};
 $('#with-model').onclick=()=>{model=true;renderSentence();};
 $('#without-model').onclick=()=>{model=false;resetSentence();};
@@ -559,12 +582,6 @@ $('#sentence-reset').onclick=resetSentence;
 $('#sentence-check').onclick=()=>{const result=I.check(task().id,chosen);checked=result.ok;renderSentence();feedback(result.message,result.ok);};
 $('#sentence-next').onclick=()=>{const options=Array.from(taskSelect.options).map(o=>Number(o.value));taskIndex=options[(options.indexOf(taskIndex)+1)%options.length];resetSentence();};
 $('#sentence-demo').onclick=()=>{if(!checked||!task().command)return;if(task().command==='crosswalk'){showCrosswalk();return;}window.previewSentence(task().command);};
-$('#sentence-listen').onclick=()=>{
- if(!('speechSynthesis' in window)){feedback('呢個瀏覽器冇語音功能，請老師讀一次。');return;}
- const voices=speechSynthesis.getVoices(),voice=voices.find(v=>v.lang.toLowerCase()==='pt-pt');
- if(!voice){feedback('呢部裝置未有歐洲葡語聲線，請老師讀一次。');return;}
- speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(task().phrase);u.lang='pt-PT';u.voice=voice;u.rate=.8;speechSynthesis.speak(u);
-};
 function showCrosswalk(){
  const art=$('#facing img').src;$('.crosswalk-pawn').style.backgroundImage=`url("${art}")`;
  $('#crosswalk-dialog').showModal();
@@ -575,6 +592,30 @@ $('#crosswalk-play').onclick=()=>{
  pawn.animate([{top:'79%'},{top:'22%'}],{duration:reduced?1:2400,easing:'ease-in-out',fill:'forwards'});
 };
 renderLanguage();renderSentence();
+})();
+</script><script type="application/json" id="lesson-audio-manifest">{"A biblioteca fica à direita, no fim da rua.": "assets/audio/6092aa6287948e49.m4a", "A biblioteca fica à direita.": "assets/audio/806da3c2f08f18bb.m4a", "A escola fica no fim desta rua.": "assets/audio/8d17eae5fb233fc9.m4a", "A farmácia fica ao lado do hospital.": "assets/audio/b05d7ea17633b206.m4a", "Agora percebi. Muito obrigado!": "assets/audio/aa5c9a2b98b9d261.m4a", "Atravesse a rua na passadeira.": "assets/audio/bcab0df7153738ba.m4a", "Atravesse o cruzamento.": "assets/audio/d0bdbe6cdef81d80.m4a", "Até logo!": "assets/audio/9e8b2d62185253d3.m4a", "Boa viagem!": "assets/audio/220cc5f11c02c29e.m4a", "Bom dia. Está tudo bem?": "assets/audio/6f6e4a3794934e4a.m4a", "Bom dia. Posso ajudar?": "assets/audio/486b98c21abb196c.m4a", "Claro. Siga em frente. Depois, vire à esquerda.": "assets/audio/192ec9000027ed9d.m4a", "Claro. Vire na segunda rua à direita.": "assets/audio/2592473cbcf1a619.m4a", "Continue até ao fim da rua.": "assets/audio/615bd84bcad5eb3c.m4a", "Continue em frente.": "assets/audio/82a0663e8ac34860.m4a", "De nada!": "assets/audio/e08cf886698ebd1c.m4a", "De nada. Boa viagem!": "assets/audio/e468ef642426aa43.m4a", "Desculpe, como posso ir para a escola?": "assets/audio/18db4784bb3e9cfe.m4a", "Desculpe, como posso ir para o museu?": "assets/audio/d4271e109f02e8b0.m4a", "Desculpe, onde fica a biblioteca?": "assets/audio/72bdf565c4c0da32.m4a", "Desculpe, onde fica o hospital?": "assets/audio/5e5555580deeadee.m4a", "Desculpe, preciso de ajuda. Onde fica o hospital?": "assets/audio/e6fe90b279f811eb.m4a", "Está bem. Muito obrigado!": "assets/audio/1e8796d0eade3748.m4a", "Fica longe daqui?": "assets/audio/f339e1b356922364.m4a", "Há um banco aqui perto?": "assets/audio/cef0f690e4da64b6.m4a", "Há um café aqui perto?": "assets/audio/5134b4d216c1e0de.m4a", "Muito obrigado pela ajuda!": "assets/audio/f15727f35f39e6c5.m4a", "Muito obrigado!": "assets/audio/58d2b64d7386325c.m4a", "Não percebi.": "assets/audio/e704d9810e657c39.m4a", "Não, fica aqui perto. Pode ir a pé.": "assets/audio/a49937061774ed70.m4a", "O café fica entre o banco e o cinema.": "assets/audio/b41d392af05c21df.m4a", "O café fica no fim da rua.": "assets/audio/62d67cb5ef00cdbd.m4a", "O hospital fica longe daqui.": "assets/audio/9939bc9e39e055ce.m4a", "O hospital fica no fim desta rua.": "assets/audio/c5fa9f4b068d845c.m4a", "O jardim fica à esquerda.": "assets/audio/ce6a246c5b17abf4.m4a", "O mercado fica aqui perto.": "assets/audio/1d96c4dedc1f0c75.m4a", "O museu fica em frente da escola.": "assets/audio/e73973180f6be078.m4a", "Obrigado. Agora percebi.": "assets/audio/dbf30dd2f1eeabbb.m4a", "Onde fica a biblioteca?": "assets/audio/ef71c2074936cdbc.m4a", "Onde fica a escola?": "assets/audio/472fd49da3b2116c.m4a", "Onde fica a farmácia, por favor?": "assets/audio/ae14844aca3e593e.m4a", "Onde fica o hospital?": "assets/audio/1d57132b0ea1f69f.m4a", "Pare!": "assets/audio/b3343713f7f3cfc5.m4a", "Pode falar mais devagar, por favor?": "assets/audio/5a891fd06a4613ee.m4a", "Pode repetir, por favor?": "assets/audio/c419332462c0c2f8.m4a", "Pode repetir?": "assets/audio/913caa7253d07fa9.m4a", "Siga em frente até ao cruzamento e vire à esquerda.": "assets/audio/bb45fe20eb143999.m4a", "Siga em frente e vire na primeira rua à direita.": "assets/audio/e854cf7a26c03932.m4a", "Siga em frente pela Rua Central.": "assets/audio/9cb31d3a55e2700a.m4a", "Siga em frente, vire à esquerda e continue até ao fim da rua.": "assets/audio/ebe4ba6bd5f23f4c.m4a", "Siga em frente.": "assets/audio/c99ac5251600e71d.m4a", "Sim, é na segunda rua à direita.": "assets/audio/3daeac99e1fb8295.m4a", "Vire na primeira rua à direita.": "assets/audio/13dc6dbf2ae14cde.m4a", "Vire na primeira rua à esquerda.": "assets/audio/4b3ce066f6493df8.m4a", "Vire na segunda rua à direita.": "assets/audio/ca6c5a13c63a5d4a.m4a", "Vire na segunda rua à esquerda.": "assets/audio/6286b93885e96ace.m4a", "Vire na terceira rua à direita.": "assets/audio/86956f6f562b2f0d.m4a", "Vire na terceira rua à esquerda.": "assets/audio/8ee27083efd12ae8.m4a", "Vire à direita na Rua do Mercado.": "assets/audio/5a39b56727a2eac3.m4a", "Vire à direita.": "assets/audio/db030a2a3a315082.m4a", "Vire à esquerda.": "assets/audio/00816667dbbd470f.m4a", "Volte para trás.": "assets/audio/6c21a4014354f325.m4a", "Vá até ao cruzamento.": "assets/audio/a2e593a556167895.m4a", "É na segunda rua à direita?": "assets/audio/0512f9081668ced3.m4a"}</script><script>'use strict';
+(function(){
+const manifest=JSON.parse($('#lesson-audio-manifest').textContent);let current=null,serial=0;
+const status=$('#audio-status');
+const boardStop=document.createElement('button');boardStop.textContent='■ 停止朗讀';boardStop.hidden=true;boardStop.className='board-audio-stop';$('.utility').append(boardStop);boardStop.onclick=stop;
+function stop(){serial++;if(current){current.pause();current.removeAttribute('src');current.remove();current=null;}status.textContent='';boardStop.hidden=true;$$('.speaking').forEach(e=>e.classList.remove('speaking'));}
+function play(text,element,token){
+ const url=manifest[text];
+ if(!url){status.textContent='呢句暫時冇錄音，請老師示範。';return Promise.resolve(false);}
+ const audio=new Audio(url);audio.hidden=true;audio.id='active-lesson-audio';document.body.append(audio);current=audio;audio.playbackRate=$('#audio-slow').checked?.8:1;
+ return new Promise(resolve=>{
+  audio.onplaying=()=>{if(token!==serial)return;status.textContent='播放中：'+text;boardStop.hidden=false;if(element)element.classList.add('speaking');};
+  const done=ok=>{if(element)element.classList.remove('speaking');audio.remove();if(token===serial){status.textContent=ok?'播放完畢。':'未能播放，請再按一次，或檢查裝置音量。';current=null;boardStop.hidden=true;}resolve(ok&&token===serial);};
+  audio.onended=()=>done(true);audio.onerror=()=>done(false);audio.onpause=()=>{if(token!==serial)done(false);};audio.play().catch(()=>done(false));
+ });
+}
+function say(text,element){stop();return play(text,element,serial);}
+async function sequence(lines){stop();const token=serial;for(const line of lines){if(serial!==token)return;if(!await play(line.text,line.element,token))return;}}
+window.LessonAudio={say,stop,sequence};$('#audio-stop').onclick=stop;
+$('#audio-slow').onchange=()=>{if(current)current.playbackRate=$('#audio-slow').checked?.8:1;};
+$('#sentence-dialog').addEventListener('close',stop);
+$('#sentence-listen').onclick=()=>say(I.tasks[Number($('#sentence-task').value)].phrase);
+for(const row of $$('.command-row')){const letter=row.querySelector('[data-command]').dataset.command,b=document.createElement('button');b.className='listen-command';b.textContent='▶';b.title='聽 '+letter+' 指令';b.setAttribute('aria-label','聽 '+letter+' 葡文指令');b.onclick=()=>say(I.get((session.choices||I.defaults)[letter]).phrase);row.append(b);}
 })();
 </script><script>'use strict';
 (function(){
@@ -605,7 +646,7 @@ function animate(s,color=colors[1]){
  animation.finished.then(()=>{if(animation!==current)return;place(s);current.cancel();animation=null;$('#lesson-map-note').textContent=L.explain(s.lastInstruction);}).catch(()=>{});
 }
 function explore(){
- clear();$('#explore-group').value=group.id;$('#explore-hint').textContent=group.hint;
+ if(window.LessonAudio)LessonAudio.stop();clear();$('#explore-group').value=group.id;$('#explore-hint').textContent=group.hint;
  const ordinal=group.id==='ordinal';$('#ordinal-builder').hidden=!ordinal;$('#explore-choices').hidden=ordinal;
  if(ordinal){const [number,direction]=selected.split('-');$('#ordinal-number').value=number;$('#ordinal-direction').value=direction;$('#ordinal-phrase').textContent=I.get(selected).phrase;}
  $('#lesson-map-title').textContent='同一起點，唔同指令';$('#lesson-map-note').textContent='揀一句，先讀出嚟，再按「行一次」。';
@@ -634,8 +675,8 @@ function predict(){
  };options.append(b);});
 }
 function switchTab(next){
- tab=next;cancel();$$('[data-lesson-tab]').forEach(b=>{const on=b.dataset.lessonTab===tab;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;});
- $('#lesson-visual').hidden=tab==='build';$('#lesson-build').hidden=tab!=='build';$('#lesson-explore').hidden=tab!=='explore';$('#lesson-predict').hidden=tab!=='predict';
+ tab=next;cancel();if(window.LessonAudio)LessonAudio.stop();$$('[data-lesson-tab]').forEach(b=>{const on=b.dataset.lessonTab===tab;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;});
+ $('#lesson-visual').hidden=!['explore','predict'].includes(tab);$('#lesson-pragmatic').hidden=tab!=='pragmatic';$('#lesson-build').hidden=tab!=='build';$('#lesson-explore').hidden=tab!=='explore';$('#lesson-predict').hidden=tab!=='predict';
  if(tab==='explore')explore();if(tab==='predict')predict();
 }
 $$('[data-lesson-tab]').forEach((b,i)=>{b.onclick=()=>switchTab(b.dataset.lessonTab);b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=$$('[data-lesson-tab]'),index=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;switchTab(tabs[index].dataset.lessonTab);tabs[index].focus();};});
@@ -650,10 +691,34 @@ $('#explore-compare').onclick=()=>{
 $('#predict-reveal').onclick=()=>{$('#predict-feedback').textContent=L.questions[questionIndex].hint;attempted=true;};
 $('#predict-next').onclick=()=>{if(!finished)return;if(questionIndex===L.questions.length-1){questionIndex=0;solved=new Set();firstTry=new Set();}else questionIndex++;predict();};
 $('#sentence-dialog').addEventListener('close',cancel);
+$('#lesson-listen').onclick=()=>{const phrase=tab==='predict'?I.get(L.questions[questionIndex].command).phrase:tab==='build'?I.tasks[Number($('#sentence-task').value)].phrase:tab==='pragmatic'?$('#pragmatic-lead').textContent:I.get(selected).phrase;LessonAudio.say(phrase);};
 window.previewSentence=id=>{id=id==='continue'?'forward':id;group=L.groups.find(g=>g.ids.includes(id));if(!group)return;selected=id;switchTab('explore');animate(L.result(id));};
 // Reopening keeps the chosen activity, while each visual example restarts from the same origin.
-$('#sentence-class').addEventListener('click',()=>{if(tab!=='build')switchTab(tab);});
+$('#sentence-class').addEventListener('click',()=>{if(['explore','predict'].includes(tab))switchTab(tab);});
 explore();
+})();
+</script><script>'use strict';
+(function(){
+const P=MapPragmatics;let index=0,model=true,solved=false;
+const select=$('#pragmatic-scene');P.scenes.forEach((s,i)=>select.add(new Option(`${i+1}. ${s.title}`,String(i))));
+function render(){
+ LessonAudio.stop();const s=P.scenes[index];select.value=String(index);$('#pragmatic-context').textContent=s.context;$('#pragmatic-lead').textContent=s.lead;$('#pragmatic-feedback').textContent='揀一句最切合情境嘅回應。';$('#pragmatic-feedback').className='';
+ $('#pragmatic-dialogue').replaceChildren();$('#pragmatic-model').hidden=true;$('#pragmatic-options').replaceChildren();$('#pragmatic-options').hidden=false;$('#pragmatic-response-title').textContent='你會點回應？';
+ s.options.forEach((text,i)=>{const row=document.createElement('div');row.className='pragmatic-option-row';const b=document.createElement('button');b.className='pragmatic-option';b.dataset.response=String(i);b.textContent=String.fromCharCode(65+i)+'　'+text;
+ const listen=document.createElement('button');listen.className='response-listen';listen.textContent='▶';listen.setAttribute('aria-label','聽選項 '+String.fromCharCode(65+i));listen.onclick=()=>LessonAudio.say(text,b);
+ b.onclick=()=>{const result=P.choose(s.id,i);$('#pragmatic-feedback').textContent=result.message;$('#pragmatic-feedback').classList.toggle('correct',result.ok);if(result.ok){solved=true;model=true;$('#pragmatic-options').hidden=true;$('#pragmatic-response-title').textContent='兩人對話試一次';showDialogue();b.classList.add('correct');$('#pragmatic-options').querySelectorAll('.pragmatic-option').forEach(x=>x.disabled=true);}else b.disabled=true;};row.append(b,listen);$('#pragmatic-options').append(row);});
+}
+function showDialogue(){
+ $('#pragmatic-model').hidden=!solved;$('#pragmatic-dialogue').replaceChildren();if(!solved)return;
+ P.dialogue(P.scenes[index].id).forEach((line,i)=>{const row=document.createElement('div');row.className='dialogue-line role-'+line.role;const role=document.createElement('b');role.textContent=line.role;const text=document.createElement('span');text.textContent=model?line.text:(i===0?'對方先開口':P.scenes[index].cues[i-1]);text.lang=model?'pt-PT':'zh-Hant';row.append(role,text);$('#pragmatic-dialogue').append(row);});
+ $('#pragmatic-hide').textContent=model?'收起葡文，自己講':'顯示葡文';
+}
+select.onchange=()=>{index=Number(select.value);solved=false;render();};
+$('#pragmatic-lead-listen').onclick=()=>LessonAudio.say(P.scenes[index].lead,$('#pragmatic-lead'));
+$('#pragmatic-hide').onclick=()=>{LessonAudio.stop();model=!model;showDialogue();};
+$('#pragmatic-play').onclick=()=>{const rows=$$('#pragmatic-dialogue .dialogue-line');LessonAudio.sequence(P.dialogue(P.scenes[index].id).map((line,i)=>({...line,element:rows[i]})));};
+$('#pragmatic-next').onclick=()=>{index=(index+1)%P.scenes.length;solved=false;render();};
+render();
 })();
 </script>
 </body></html>

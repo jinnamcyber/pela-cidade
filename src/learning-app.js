@@ -27,7 +27,7 @@ function animate(s,color=colors[1]){
  animation.finished.then(()=>{if(animation!==current)return;place(s);current.cancel();animation=null;$('#lesson-map-note').textContent=L.explain(s.lastInstruction);}).catch(()=>{});
 }
 function explore(){
- clear();$('#explore-group').value=group.id;$('#explore-hint').textContent=group.hint;
+ if(window.LessonAudio)LessonAudio.stop();clear();$('#explore-group').value=group.id;$('#explore-hint').textContent=group.hint;
  const ordinal=group.id==='ordinal';$('#ordinal-builder').hidden=!ordinal;$('#explore-choices').hidden=ordinal;
  if(ordinal){const [number,direction]=selected.split('-');$('#ordinal-number').value=number;$('#ordinal-direction').value=direction;$('#ordinal-phrase').textContent=I.get(selected).phrase;}
  $('#lesson-map-title').textContent='同一起點，唔同指令';$('#lesson-map-note').textContent='揀一句，先讀出嚟，再按「行一次」。';
@@ -56,8 +56,8 @@ function predict(){
  };options.append(b);});
 }
 function switchTab(next){
- tab=next;cancel();$$('[data-lesson-tab]').forEach(b=>{const on=b.dataset.lessonTab===tab;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;});
- $('#lesson-visual').hidden=tab==='build';$('#lesson-build').hidden=tab!=='build';$('#lesson-explore').hidden=tab!=='explore';$('#lesson-predict').hidden=tab!=='predict';
+ tab=next;cancel();if(window.LessonAudio)LessonAudio.stop();$$('[data-lesson-tab]').forEach(b=>{const on=b.dataset.lessonTab===tab;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;});
+ $('#lesson-visual').hidden=!['explore','predict'].includes(tab);$('#lesson-pragmatic').hidden=tab!=='pragmatic';$('#lesson-build').hidden=tab!=='build';$('#lesson-explore').hidden=tab!=='explore';$('#lesson-predict').hidden=tab!=='predict';
  if(tab==='explore')explore();if(tab==='predict')predict();
 }
 $$('[data-lesson-tab]').forEach((b,i)=>{b.onclick=()=>switchTab(b.dataset.lessonTab);b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=$$('[data-lesson-tab]'),index=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;switchTab(tabs[index].dataset.lessonTab);tabs[index].focus();};});
@@ -72,8 +72,9 @@ $('#explore-compare').onclick=()=>{
 $('#predict-reveal').onclick=()=>{$('#predict-feedback').textContent=L.questions[questionIndex].hint;attempted=true;};
 $('#predict-next').onclick=()=>{if(!finished)return;if(questionIndex===L.questions.length-1){questionIndex=0;solved=new Set();firstTry=new Set();}else questionIndex++;predict();};
 $('#sentence-dialog').addEventListener('close',cancel);
+$('#lesson-listen').onclick=()=>{const phrase=tab==='predict'?I.get(L.questions[questionIndex].command).phrase:tab==='build'?I.tasks[Number($('#sentence-task').value)].phrase:tab==='pragmatic'?$('#pragmatic-lead').textContent:I.get(selected).phrase;LessonAudio.say(phrase);};
 window.previewSentence=id=>{id=id==='continue'?'forward':id;group=L.groups.find(g=>g.ids.includes(id));if(!group)return;selected=id;switchTab('explore');animate(L.result(id));};
 // Reopening keeps the chosen activity, while each visual example restarts from the same origin.
-$('#sentence-class').addEventListener('click',()=>{if(tab!=='build')switchTab(tab);});
+$('#sentence-class').addEventListener('click',()=>{if(['explore','predict'].includes(tab))switchTab(tab);});
 explore();
 })();
