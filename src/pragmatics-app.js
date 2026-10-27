@@ -15,7 +15,7 @@ function showDialogue(){
  $('#pragmatic-hide').textContent=model?'收起葡文，自己講':'顯示葡文';
 }
 select.onchange=()=>{index=Number(select.value);solved=false;render();};
-$('#pragmatic-lead-listen').onclick=()=>LessonAudio.say(P.scenes[index].lead,$('#pragmatic-lead'));
+$('#pragmatic-lead-listen').onclick=()=>LessonAudio.say(P.scenes[index].lead,$('#pragmatic-lead'),'B');
 $('#pragmatic-hide').onclick=()=>{LessonAudio.stop();model=!model;showDialogue();};
 $('#pragmatic-play').onclick=()=>{const rows=$$('#pragmatic-dialogue .dialogue-line');LessonAudio.sequence(P.dialogue(P.scenes[index].id).map((line,i)=>({...line,element:rows[i]})));};
 $('#pragmatic-next').onclick=()=>{index=(index+1)%P.scenes.length;solved=false;render();};

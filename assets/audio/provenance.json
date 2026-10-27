@@ -1,0 +1,10 @@
+{
+  "provider": "Microsoft neural speech via edge-tts",
+  "locale": "pt-PT",
+  "voiceA": "pt-PT-RaquelNeural",
+  "voiceB": "pt-PT-DuarteNeural",
+  "rate": "-5%",
+  "clips": 79,
+  "format": "AAC mono M4A 64 kb/s",
+  "synthetic": true
+}

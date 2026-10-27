@@ -72,7 +72,7 @@ $('#explore-compare').onclick=()=>{
 $('#predict-reveal').onclick=()=>{$('#predict-feedback').textContent=L.questions[questionIndex].hint;attempted=true;};
 $('#predict-next').onclick=()=>{if(!finished)return;if(questionIndex===L.questions.length-1){questionIndex=0;solved=new Set();firstTry=new Set();}else questionIndex++;predict();};
 $('#sentence-dialog').addEventListener('close',cancel);
-$('#lesson-listen').onclick=()=>{const phrase=tab==='predict'?I.get(L.questions[questionIndex].command).phrase:tab==='build'?I.tasks[Number($('#sentence-task').value)].phrase:tab==='pragmatic'?$('#pragmatic-lead').textContent:I.get(selected).phrase;LessonAudio.say(phrase);};
+$('#lesson-listen').onclick=()=>{const phrase=tab==='predict'?I.get(L.questions[questionIndex].command).phrase:tab==='build'?I.tasks[Number($('#sentence-task').value)].phrase:tab==='pragmatic'?$('#pragmatic-lead').textContent:I.get(selected).phrase;LessonAudio.say(phrase,null,tab==='pragmatic'?'B':'A');};
 window.previewSentence=id=>{id=id==='continue'?'forward':id;group=L.groups.find(g=>g.ids.includes(id));if(!group)return;selected=id;switchTab('explore');animate(L.result(id));};
 // Reopening keeps the chosen activity, while each visual example restarts from the same origin.
 $('#sentence-class').addEventListener('click',()=>{if(['explore','predict'].includes(tab))switchTab(tab);});
