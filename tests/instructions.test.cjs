@@ -40,9 +40,20 @@ test('named street, stop and turn around have corresponding behavior',()=>{
  assert.throws(()=>I.run(start(),'crosswalk'),/情境/);assert.throws(()=>I.run(start(),'toString'));
 });
 test('sentence workshop checks word order, gives retry hints and covers source commands',()=>{
- assert.equal(I.tasks.length,12);
- for(const t of I.tasks){assert.equal(I.check(t.id,t.chunks).ok,true);assert.equal(I.check(t.id,[...t.chunks].reverse()).ok,false);assert.equal(I.check(t.id,[]).ok,false);}
+ assert.equal(I.tasks.length,36);assert.equal(new Set(I.tasks.map(t=>t.id)).size,36);
+ for(const t of I.tasks){assert.equal(I.check(t.id,t.chunks).ok,true);if(t.chunks.length>1)assert.equal(I.check(t.id,[...t.chunks].reverse()).ok,false);assert.equal(I.check(t.id,[]).ok,false);}
  for(const id of ['forward','junction','end','first-right','second-left','crossing','central','mercado-right'])assert.ok(I.run(start(),id));
  assert.equal(I.validateChoices({A:'forward',B:'junction',C:'end'}),true);
  assert.equal(I.validateChoices({A:'crosswalk',B:'junction',C:'end'}),false);
+});
+test('learning comparisons and prediction answers correspond to real distinct map states',()=>{
+ const L=require('../src/learning');
+ for(const g of L.groups)for(const id of g.ids){const s=L.result(id);assert.deepEqual(s,I.run(start(),id));assert.deepEqual(L.points(s).at(-1),I.position(s));assert.ok(L.explain(id));}
+ for(const q of L.questions){
+  assert.equal(q.options.filter((id,i)=>L.answer(q.id,i)).length,1);
+  const endpoints=q.options.map(id=>{const s=L.result(id);return JSON.stringify([I.position(s),s.heading]);});
+  assert.equal(new Set(endpoints).size,3);
+  assert.deepEqual(L.origin(),start());
+ }
+ assert.equal(L.answer('unknown',0),false);
 });

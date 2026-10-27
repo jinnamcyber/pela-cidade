@@ -116,7 +116,31 @@ const tasks=[
  ['central','沿 Rua Central 向前行',['Siga','em frente','pela Rua Central.'],'central'],
  ['named','到 Rua do Mercado 先轉右',['Vire','à direita','na Rua do Mercado.'],'mercado-right'],
  ['ask','有禮貌咁問點去學校',['Desculpe,','como posso ir','para a escola?'],null],
- ['location','話畀對方知咖啡店喺街尾',['O café','fica','no fim da rua.'],null]
+ ['location','話畀對方知咖啡店喺街尾',['O café','fica','no fim da rua.'],null],
+ ['right','叫旅人轉向右邊',['Vire','à direita.'],'right'],
+ ['continue','叫對方繼續向前行',['Continue','em frente.'],'continue'],
+ ['first-left','到第一條左街先轉',['Vire','na primeira rua','à esquerda.'],'first-left'],
+ ['second-right','到第二條右街先轉',['Vire','na segunda rua','à direita.'],'second-right'],
+ ['third-left','到第三條左街先轉',['Vire','na terceira rua','à esquerda.'],'third-left'],
+ ['third-right','到第三條右街先轉',['Vire','na terceira rua','à direita.'],'third-right'],
+ ['back','叫對方轉身回頭',['Volte','para trás.'],'back'],
+ ['stop','叫對方停低',['Pare!'],'stop'],
+ ['ask-museum','問點樣去博物館',['Desculpe,','como posso ir','para o museu?'],null],
+ ['ask-hospital','問醫院喺邊',['Desculpe,','onde fica','o hospital?'],null],
+ ['ask-library','問圖書館喺邊',['Onde','fica','a biblioteca?'],null],
+ ['ask-pharmacy','有禮貌咁問藥房喺邊',['Onde fica','a farmácia,','por favor?'],null],
+ ['ask-bank','問附近有冇銀行',['Há','um banco','aqui perto?'],null],
+ ['ask-repeat','聽唔清楚，請對方再講一次',['Pode repetir,','por favor?'],null],
+ ['ask-slower','請對方講慢啲',['Pode falar','mais devagar,','por favor?'],null],
+ ['thanks','多謝對方幫手',['Muito obrigado','pela ajuda!'],null],
+ ['near','話畀對方知市場喺附近',['O mercado','fica','aqui perto.'],null],
+ ['beside','話畀對方知藥房喺醫院旁邊',['A farmácia','fica','ao lado do hospital.'],null],
+ ['opposite','話畀對方知博物館喺學校對面',['O museu','fica','em frente da escola.'],null],
+ ['between','話畀對方知咖啡店喺銀行同電影院之間',['O café fica','entre o banco','e o cinema.'],null],
+ ['on-right','話畀對方知圖書館喺右邊',['A biblioteca','fica','à direita.'],null],
+ ['on-left','話畀對方知公園喺左邊',['O jardim','fica','à esquerda.'],null],
+ ['far','話畀對方知醫院好遠',['O hospital','fica','longe daqui.'],null],
+ ['at-end','話畀對方知學校喺呢條街盡頭',['A escola fica','no fim','desta rua.'],null]
 ].map(([id,prompt,chunks,command])=>({id,prompt,chunks,command,phrase:chunks.join(' ')}));
 function check(taskId,chosen){
  const t=tasks.find(t=>t.id===taskId);if(!t||!Array.isArray(chosen))return {ok:false,message:'先揀一個任務。'};

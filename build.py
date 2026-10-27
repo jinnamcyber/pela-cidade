@@ -9,6 +9,8 @@ shared={
  '/*STYLE*/':(root/'src/style.css').read_text(),
  '/*ENGINE*/':(root/'src/engine.js').read_text(),
  '/*INSTRUCTIONS*/':(root/'src/instructions.js').read_text(),
+ '/*LEARNING*/':(root/'src/learning.js').read_text(),
+ '/*LEARNING_APP*/':(root/'src/learning-app.js').read_text(),
  '/*APP*/':(root/'src/app.js').read_text(),
  '/*LANGUAGE_APP*/':(root/'src/language-app.js').read_text(),
 }
