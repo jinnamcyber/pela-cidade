@@ -20,7 +20,7 @@ function render(data){
  document.querySelector('#mission').textContent=target?'Vamos '+target+'.':'Vamos explorar a cidade!';
  const open=data.mode==='devices'&&data.round?.open;
  document.querySelector('#round').textContent=open?'第 '+data.round.id+' 輪 · 投票中':data.round?'第 '+data.round.id+' 輪已截止':'等老師開始投票。';
- buttons.forEach(b=>{b.disabled=!open||busy;b.classList.toggle('selected',data.myChoice===b.dataset.choice);b.setAttribute('aria-pressed',String(data.myChoice===b.dataset.choice));});
+ buttons.forEach(b=>{const label=data.choiceLabels?.[b.dataset.choice];if(label){b.querySelector('span').firstChild.textContent=label.phrase;b.querySelector('small').textContent=label.zh;}b.disabled=!open||busy;b.classList.toggle('selected',data.myChoice===b.dataset.choice);b.setAttribute('aria-pressed',String(data.myChoice===b.dataset.choice));});
  document.querySelector('#status').textContent=open?(data.myChoice?'已投 '+data.myChoice+'。截止前可以改票。':'今次應該點行？揀 A、B 或 C。'):data.state.arrived?data.state.last:data.round?data.state.last:'等老師開新一輪。';
  document.querySelector('#retry').hidden=true;
 }

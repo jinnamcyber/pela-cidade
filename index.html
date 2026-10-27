@@ -12,12 +12,16 @@ aside{margin-top:14px;background:var(--paper);padding:23px;border-radius:24px;bo
 /* Text stays readable above the footprint trail; the traveler has a small physical pawn base. */
 #trail{z-index:1}#streets{z-index:2}.pawn-shadow{inset:21%;background:#fffdf2;border:2px solid #e7c359;filter:none;box-shadow:0 3px 7px #173b4555}
 @media(max-height:880px) and (min-width:761px){aside{gap:10px}#status{min-height:48px}}
+/* Vocabulary and sentence workshop. */
+#command-library,#sentence-class{background:#f4f6ed;border-color:#b7cdb8;font-weight:750}#sentence-class{background:var(--gold);border-color:#d5b351}.learning-dialog{max-width:1000px;max-height:90dvh;overflow:auto}.learning-dialog h2{margin-bottom:9px}.learning-lead{margin:0 0 20px;color:#6a7e68}.learning-dialog h3{font-size:17px;margin:23px 0 12px}.instruction-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.instruction-card{display:grid;grid-template-columns:30px 1fr;gap:4px 10px;text-align:left;min-height:100px;padding:14px;background:#eff3e9}.instruction-card b{grid-row:span 2;color:var(--teal);font-size:22px}.instruction-card span{font-size:15px;font-weight:750}.instruction-card small{font-size:11px;font-weight:450;color:#678064}.choice-config{padding:16px 20px;background:#e9efe2;border-radius:14px}.choice-config h3{margin:0 0 12px}.choice-config p{font-size:11px;margin:9px 0 0;color:#678064}.choice-config .primary{max-width:260px;margin-top:12px}#choice-selectors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}#choice-selectors label{font-weight:800;display:flex;align-items:center;gap:8px}#choice-selectors select{font-size:12px;min-height:44px;padding:7px}.lesson-title>span{font-size:13px;color:#6c8567}.sentence-settings{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:20px 0}.sentence-settings>label{font-size:12px}.sentence-settings select{font-size:15px;flex:1;min-width:230px}.scaffold-toggle{display:flex;gap:5px}.scaffold-toggle button{font-size:12px;min-height:40px}.scaffold-toggle button[aria-pressed=true]{background:var(--ink);color:white}.sentence-prompt{font-size:25px;font-weight:800;margin:20px 0 10px}#sentence-model{color:#577a54;font-size:20px;margin:10px 0 22px}#sentence-answer{min-height:100px;display:flex;align-items:center;flex-wrap:wrap;gap:9px;border-bottom:3px solid #b3c7a5;padding:14px 5px;background:#eef3e8;border-radius:10px 10px 0 0}.answer-placeholder{color:#93a18e;font-size:16px}.answer-word{font-size:23px;padding:13px 17px;min-height:61px;background:#183f40;color:white;border:0}.answer-word:hover:not(:disabled){background:#2d6555}#word-bank{display:flex;gap:12px;flex-wrap:wrap;min-height:88px;padding:24px 0 10px}.word-tile{font-size:22px;padding:14px 18px;border:2px solid #d3dfc6;min-height:60px;background:#fff}.word-tile:disabled{opacity:.2}.sentence-tools{display:flex;gap:9px;margin:10px 0}.sentence-tools button{font-size:12px}#sentence-feedback{min-height:54px;font-size:15px;color:#8c6238;padding:12px 0;margin:8px 0}#sentence-feedback.correct{color:#287342}.sentence-actions{display:flex;gap:10px}.sentence-actions button{flex:1;font-size:14px}.sentence-actions .primary{width:auto}.crosswalk-scene{position:relative;height:340px;overflow:hidden;background:#c9d5c1;border-radius:18px;margin:22px 0}.crossing-road{position:absolute;left:0;right:0;top:36%;height:31%;background:#77868b;box-shadow:0 -8px 0 #eee4d2,0 8px 0 #eee4d2}.zebra{position:absolute;left:44%;width:12%;top:36%;height:31%;background:repeating-linear-gradient(to bottom,#fff 0 9px,transparent 9px 17px)}.crosswalk-pawn{position:absolute;left:43%;width:14%;height:25%;top:79%;transform:translateY(-50%);background-size:contain;background-position:center;background-repeat:no-repeat;filter:drop-shadow(0 3px 2px #26383988)}.pavement-label{position:absolute;top:15%;left:13%;color:#577052;font-size:20px}.passadeira-label{position:absolute;top:47%;left:65%;font-size:20px;color:white}
+@media(max-width:1250px){.header-prompt{display:none}.top-actions{gap:5px}.top-actions button{padding:7px 9px;font-size:11px}}@media(max-width:700px){.instruction-grid{grid-template-columns:1fr 1fr}#choice-selectors{grid-template-columns:1fr}.learning-dialog{padding:22px}.sentence-actions{flex-direction:column}.sentence-prompt{font-size:21px}.word-tile,.answer-word{font-size:18px;padding:10px 12px}.sentence-settings select{min-width:100%}.brand p{display:none}.top-actions button{font-size:10px;padding:6px}.top-actions #help{display:none}}
+.command-copy{white-space:normal;min-width:0;flex:1}.learning-dialog .instruction-card:hover:not(:disabled){background:#e4edd9}
 </style></head>
 <body>
 <header>
  <div class="brand"><span class="brand-mark" aria-hidden="true">↗</span><div><h1>Pela cidade<span class="brand-period">.</span></h1><p>葡文指路探險</p></div></div>
  <p class="header-prompt">Uma cidade. Um destino. <strong>Vamos juntos!</strong></p>
- <div class="top-actions"><button id="join" hidden>學生加入 <span aria-hidden="true">＋</span></button><button id="help">玩法</button><button id="fullscreen" aria-label="全螢幕">⛶ <span>全螢幕</span></button></div>
+ <div class="top-actions"><button id="command-library">指令庫</button><button id="sentence-class">砌句教室</button><button id="join" hidden>學生加入 <span aria-hidden="true">＋</span></button><button id="help">玩法</button><button id="fullscreen" aria-label="全螢幕">⛶ <span>全螢幕</span></button></div>
 </header>
 <main>
  <section class="map-panel" aria-label="互動地圖">
@@ -47,8 +51,11 @@ aside{margin-top:14px;background:var(--paper);padding:23px;border-radius:24px;bo
   <div class="speech"><span class="speech-mark" aria-hidden="true">“</span><div><strong>Pode repetir, por favor?</strong><small>聽唔清楚？試下用葡文問多次。</small></div></div>
  </aside>
 </main>
-<dialog id="help-dialog"><button class="close" data-close aria-label="關閉">×</button><h2>帶旅人去目的地</h2><ol><li>揀目的地。旅人由 Partida 出發，面向上方。</li><li><b>A 左轉 ／ B 前進 ／ C 右轉</b>。左右轉只改面向；前進先行到下一個路口或路盡頭。</li><li>直接操作：按指令牌，或用鍵盤 ← ↑ →（亦可用 A B C）。</li><li>全班投票：學生舉手或舉 ABC 卡，老師輸入三個票數再確認。同票時清空票數重投。</li><li>到達會顯示 Chegámos!；可以撤回或揀新任務。</li></ol><p>裝置投票：用「啟動手機投票.command」啟動，學生同電腦連同一個網絡。老師每輪開放投票，再確認結果。每個瀏覽器保留一票，截止前可以改票。</p><p class="note">城市係課堂練習示意圖。無需登入，亦唔收集學生姓名。</p></dialog>
+<dialog id="help-dialog"><button class="close" data-close aria-label="關閉">×</button><h2>帶旅人去目的地</h2><ol><li>揀目的地。旅人由 Partida 出發，面向上方。</li><li>「Siga em frente」向前行一小段；「Vá até ao cruzamento」行到下一個路口；「Continue até ao fim da rua」經過路口一直行到盡頭。</li><li>左右轉只改面向。在兩個路口之間轉向後，先沿條街行到路口，先能轉入另一條街。</li><li>第一／第二／第三條街：向前數可以轉入指定方向嘅路口，所在路口唔計。</li><li>「指令庫」可以更換 A／B／C 三句，舉手或裝置投票會用同一組句子。</li><li>「砌句教室」先看例句，再收起例句自己砌。核對後可由起點示範句子嘅意思。</li></ol><p>鍵盤 ← ↑ → 或 A B C 對應畫面嘅三張牌。「過馬路」用獨立行人線情境示範。裝置投票需開本機伺服器及連同一個網絡。</p><p class="note">城市係課堂練習示意圖。無需登入，亦唔收集學生姓名。</p></dialog>
 <dialog id="join-dialog"><button class="close" data-close aria-label="關閉">×</button><h2>一齊加入探險</h2><p>學生同電腦連同一個 Wi-Fi，再開以下網址：</p><div id="join-addresses"></div><p class="note">只分享學生網址。若學校 Wi-Fi 禁止裝置互通，可改用舉手投票。</p></dialog>
+<dialog id="commands-dialog" class="learning-dialog"><button class="close" data-close aria-label="關閉">×</button><h2>一句指令，一個行動</h2><p class="learning-lead">揀一句，先讀出嚟，再睇旅人點行。</p><div class="choice-config"><h3>全班今次投邊三句？</h3><div id="choice-selectors"></div><button id="save-choices" class="primary">用呢三句做 A／B／C</button><p>更換指令會結束當前投票。向前數第幾條街時，所在路口唔計。</p></div><div id="instruction-bank"></div></dialog>
+<dialog id="sentence-dialog" class="learning-dialog sentence-dialog"><button class="close" data-close aria-label="關閉">×</button><div class="lesson-title"><span>Oficina de frases</span><h2>將意思砌成一句</h2></div><div class="sentence-settings"><label for="sentence-task">今次想講咩？</label><select id="sentence-task"></select><div class="scaffold-toggle"><button id="with-model" aria-pressed="true">睇例句砌</button><button id="without-model" aria-pressed="false">自己砌</button></div></div><div class="sentence-prompt" id="sentence-prompt"></div><div id="sentence-model"></div><div id="sentence-answer" aria-label="已砌嘅句子"></div><div id="word-bank" aria-label="可選詞塊"></div><div class="sentence-tools"><button id="sentence-undo">撤回一格</button><button id="sentence-reset">重新砌</button><button id="sentence-listen">聽一次</button></div><p id="sentence-feedback" role="status" aria-live="polite">點詞塊，按次序砌一句。</p><div class="sentence-actions"><button id="sentence-check" class="primary">核對句子</button><button id="sentence-demo" disabled>由起點試行</button><button id="sentence-next">下一句</button></div><p class="note">先揀詞 → 讀畀同學聽 → 試行 → 寫返落紙。示範會切到練習地圖、由起點出發。</p></dialog>
+<dialog id="crosswalk-dialog" class="learning-dialog"><button class="close" data-close aria-label="關閉">×</button><h2>Atravesse a rua na passadeira.</h2><p>喺行人線由路邊行去對面。</p><div class="crosswalk-scene"><div class="crossing-road"></div><div class="zebra"></div><div class="crosswalk-pawn"></div><span class="pavement-label">passeio</span><span class="passadeira-label">passadeira</span></div><button id="crosswalk-play" class="primary">示範過馬路</button><p class="note">呢個係行人線情境示範；唔會改變城市地圖上嘅路線。</p></dialog>
 <script type="application/json" id="map-images">{"worksheet": "assets/mapa-worksheet-3d.png", "city": "assets/mapa-city-3d.png"}</script><script>/* Shared by the offline board and the classroom server. No external dependencies. */
 (function(root){
 'use strict';
@@ -135,12 +142,142 @@ function winner(counts){
 const api={places,nodes,maps,graph,commands,initial,action,undo,winner,destination};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.MapEngine=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
+</script><script>(function(root){
+'use strict';
+const E=typeof module!=='undefined'&&module.exports?require('./engine'):root.MapEngine;
+const items=[
+ ['forward','Siga em frente.','向前行一段','走一段', 'walk','↑'],
+ ['junction','Vá até ao cruzamento.','行到下一個路口停低','到路口','walk','⊞'],
+ ['end','Continue até ao fim da rua.','經過路口，一直行到路盡頭','到盡頭','walk','⇥'],
+ ['continue','Continue em frente.','繼續向前行一段','繼續行','walk','↑'],
+ ['left','Vire à esquerda.','原地轉向左邊','左轉','turn','↰'],
+ ['right','Vire à direita.','原地轉向右邊','右轉','turn','↱'],
+ ['first-left','Vire na primeira rua à esquerda.','到前面第一條可轉左嘅街先轉向','第一條左','turn','1↰'],
+ ['first-right','Vire na primeira rua à direita.','到前面第一條可轉右嘅街先轉向','第一條右','turn','1↱'],
+ ['second-left','Vire na segunda rua à esquerda.','經過第一條，到第二條可轉左嘅街先轉向','第二條左','turn','2↰'],
+ ['second-right','Vire na segunda rua à direita.','經過第一條，到第二條可轉右嘅街先轉向','第二條右','turn','2↱'],
+ ['third-left','Vire na terceira rua à esquerda.','數到第三條可轉左嘅街先轉向','第三條左','turn','3↰'],
+ ['third-right','Vire na terceira rua à direita.','數到第三條可轉右嘅街先轉向','第三條右','turn','3↱'],
+ ['crossing','Atravesse o cruzamento.','經過路口，行到路口另一邊','穿過路口','walk','⇧'],
+ ['mercado-right','Vire à direita na Rua do Mercado.','到 Rua do Mercado 先轉向右邊','指定街轉右','turn','↱'],
+ ['central','Siga em frente pela Rua Central.','沿 Rua Central 向前行一段','沿指定街','walk','↑'],
+ ['stop','Pare!','停低','停低','walk','■'],
+ ['back','Volte para trás.','原地轉身，面向來路','轉身回頭','turn','↶'],
+ ['crosswalk','Atravesse a rua na passadeira.','喺行人線由路邊行去對面','過馬路情境','scene','▤']
+].map(([id,phrase,zh,short,group,icon])=>({id,phrase,zh,short,group,icon}));
+const catalog=Object.fromEntries(items.map(x=>[x.id,x]));
+const defaults={A:'left',B:'forward',C:'right'};
+function get(id){return Object.hasOwn(catalog,id)?catalog[id]:null;}
+function validateChoices(c){return c&&['A','B','C'].every(k=>get(c[k])&&c[k]!=='crosswalk');}
+function position(s){
+ const g=E.graph(s);if(!s.edge)return {x:g[s.node].x,y:g[s.node].y};const a=g[s.edge.a],b=g[s.edge.b];
+ return {x:a.x+(b.x-a.x)*s.edge.t,y:a.y+(b.y-a.y)*s.edge.t};
+}
+function facing(a,b){return a.x===b.x?(b.y>a.y?2:0):(b.x>a.x?1:3);}
+function run(state,id){
+ const command=get(id);if(!command)throw new Error('指令無效。');
+ if(id==='crosswalk')throw new Error('呢句請用「過馬路情境」示範。');
+ const s=JSON.parse(JSON.stringify(state)),g=E.graph(s);
+ if(s.arrived&&id!=='stop')throw new Error('已到達，請先揀另一個目的地或返回起點。');
+ const start=JSON.stringify({node:s.node,heading:s.heading,edge:s.edge||null});
+ function at(){return g[s.node];}
+ function stepNode(){
+  let next;
+  if(s.edge){
+   const edge=s.edge,h=facing(g[edge.a],g[edge.b]);
+   if(s.heading===h)next=edge.b;
+   else if(s.heading===(h+2)%4)next=edge.a;
+   else throw new Error('而家喺兩個路口之間。先沿條街行到路口，先可以轉入另一條街。');
+  }else next=at().edges[s.heading];
+  if(!next)throw new Error('呢個方向已經冇路。試下轉向，或者用「轉身回頭」。');
+  s.node=next;s.edge=null;if(s.path.at(-1)!==next)s.path.push(next);s.moves++;
+  if(s.target&&E.destination(s.target).node===next)s.arrived=true;
+ }
+ function walk(distance){
+  while(distance>0.001){
+   if(!s.edge){const next=at().edges[s.heading];if(!next)throw new Error('呢個方向已到路盡頭，請轉向。');s.edge={a:s.node,b:next,t:0};}
+   const edge=s.edge,a=g[edge.a],b=g[edge.b],length=Math.hypot(b.x-a.x,b.y-a.y),h=facing(a,b);
+   if(s.heading!==h&&s.heading!==(h+2)%4)throw new Error('先沿條街行到路口，再轉入另一條街。');
+   const sign=s.heading===h?1:-1,remaining=(sign===1?1-edge.t:edge.t)*length;
+   if(distance<remaining-.001){edge.t+=sign*distance/length;distance=0;}
+   else{distance-=remaining;stepNode();if(s.arrived)break;}
+  }
+ }
+ function nextJunction(){
+  for(let i=0;i<80;i++){stepNode();if(Object.keys(at().edges).length>=3)return;if(s.arrived)throw new Error('前面係路盡頭，唔係路口。試下「行到盡頭」。');}
+  throw new Error('前面搵唔到路口。');
+ }
+ if(id==='left'||id==='right')s.heading=(s.heading+(id==='left'?3:1))%4;
+ else if(id==='back')s.heading=(s.heading+2)%4;
+ else if(id==='stop'){}
+ else if(id==='forward'||id==='continue')walk(70);
+ else if(id==='central'){
+  const p=position(s);if(p.x!==780||![0,2].includes(s.heading))throw new Error('要先喺 Rua Central，並沿住條街嘅方向行。');walk(70);
+ }
+ else if(id==='junction')nextJunction();
+ else if(id==='end'){
+  if(!s.edge&&!at().edges[s.heading])throw new Error('已經喺路盡頭。可以轉身或者換方向。');
+  for(let i=0;i<80;i++){stepNode();if(s.arrived||!at().edges[s.heading])break;}
+ }
+ else if(id==='crossing'){
+  if(s.edge||Object.keys(at().edges).length<3)nextJunction();
+  if(!at().edges[s.heading])throw new Error('呢個路口前面冇直路，請選擇轉向。');walk(45);
+ }
+ else if(id==='mercado-right'){
+  let found=false;
+  for(let i=0;i<80;i++){
+   if(!s.edge&&at().y===450&&at().edges[(s.heading+1)%4]){s.heading=(s.heading+1)%4;found=true;break;}
+   stepNode();
+  }
+  if(!found)throw new Error('沿住呢個方向去唔到 Rua do Mercado。');
+ }
+ else{
+  const match=id.match(/^(first|second|third)-(left|right)$/);if(!match)throw new Error('指令無效。');
+  const count={first:1,second:2,third:3}[match[1]],turn=match[2]==='left'?3:1;let seen=0,found=false;
+  for(let i=0;i<80;i++){
+   try{stepNode();}catch{throw new Error(`前面冇第 ${count} 條可以轉${turn===3?'左':'右'}嘅街，請換一句或返回起點。`);}
+   if(at().edges[(s.heading+turn)%4]&&++seen===count){s.heading=(s.heading+turn)%4;found=true;break;}
+  }
+  if(!found)throw new Error('前面搵唔到指定嘅街。');
+ }
+ if(id!=='stop'&&start!==JSON.stringify({node:s.node,heading:s.heading,edge:s.edge||null})){
+  const {history,...previous}=JSON.parse(JSON.stringify(state));s.history=[...state.history,previous];
+ }
+ s.last=command.phrase+' '+command.zh;
+ if(s.arrived)s.last='Chegámos! 到達 '+E.destination(s.target).name+'！';
+ s.lastInstruction=id;
+ return s;
+}
+const tasks=[
+ ['forward','向前行一段',['Siga','em frente.'],'forward'],
+ ['left','叫旅人轉向左邊',['Vire','à esquerda.'],'left'],
+ ['junction','行到路口就停低',['Vá','até ao','cruzamento.'],'junction'],
+ ['end','經過路口，一直行到盡頭',['Continue','até ao fim','da rua.'],'end'],
+ ['first-right','前面第一條右街先轉',['Vire','na primeira rua','à direita.'],'first-right'],
+ ['second-left','前面第二條左街先轉',['Vire','na segunda rua','à esquerda.'],'second-left'],
+ ['crossing','穿過十字路口去另一邊',['Atravesse','o cruzamento.'],'crossing'],
+ ['crosswalk','喺行人線過馬路',['Atravesse','a rua','na passadeira.'],'crosswalk'],
+ ['central','沿 Rua Central 向前行',['Siga','em frente','pela Rua Central.'],'central'],
+ ['named','到 Rua do Mercado 先轉右',['Vire','à direita','na Rua do Mercado.'],'mercado-right'],
+ ['ask','有禮貌咁問點去學校',['Desculpe,','como posso ir','para a escola?'],null],
+ ['location','話畀對方知咖啡店喺街尾',['O café','fica','no fim da rua.'],null]
+].map(([id,prompt,chunks,command])=>({id,prompt,chunks,command,phrase:chunks.join(' ')}));
+function check(taskId,chosen){
+ const t=tasks.find(t=>t.id===taskId);if(!t||!Array.isArray(chosen))return {ok:false,message:'先揀一個任務。'};
+ if(chosen.length!==t.chunks.length)return {ok:false,message:'仲有詞塊未用到。試下將佢哋砌成一句。'};
+ const index=chosen.findIndex((c,i)=>c!==t.chunks[i]);
+ if(index>=0)return {ok:false,message:`睇下第 ${index+1} 格。呢度要用「${t.chunks[index]}」。再試一次。`};
+ return {ok:true,message:'句子砌好喇！讀畀同學聽，再試下人物會點行。'};
+}
+const api={items,catalog,get,defaults,validateChoices,run,position,tasks,check};
+if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.MapInstructions=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
 </script><script>'use strict';
-const E=MapEngine,$=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+const E=MapEngine,I=MapInstructions,$=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
 const mapImages=JSON.parse($('#map-images').textContent);
 const teacherKey=new URLSearchParams(location.search).get('key');
 const online=location.pathname==='/teacher'&&!!teacherKey;
-let session={state:E.initial(),mode:'direct',round:null,revision:0},lastRevision=-1,busy=false,notice='',lastHeading=0,rotation=0;
+let session={state:E.initial(),mode:'direct',round:null,revision:0,choices:{...I.defaults}},lastRevision=-1,busy=false,notice='',lastHeading=0,rotation=0;
 const target=$('#target');
 target.innerHTML='<option value="">Explorar · 自由探索</option>'+E.places.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 // Illustration bounds in the same 1566 × 950 space as the movement graph.
@@ -174,8 +311,9 @@ function renderMap(map){
 }
 function drawTrail(s){
  const ctx=$('#trail').getContext('2d'),streets=E.graph(s);
- ctx.clearRect(0,0,1566,950);if(s.path.length<2)return;
+ ctx.clearRect(0,0,1566,950);if(s.path.length<2&&!s.edge)return;
  ctx.beginPath();s.path.forEach((id,i)=>{const p=position(s.map||'worksheet',streets[id]);if(i)ctx.lineTo(p.x,p.y);else ctx.moveTo(p.x,p.y);});
+ if(s.edge){const p=position(s.map||'worksheet',I.position(s));ctx.lineTo(p.x,p.y);}
  ctx.lineCap='round';ctx.lineJoin='round';ctx.setLineDash([]);ctx.lineWidth=13;ctx.strokeStyle='#fbfcf8b3';ctx.stroke();
  ctx.lineWidth=7;ctx.strokeStyle='#205b55';ctx.setLineDash([2,17]);ctx.stroke();ctx.setLineDash([]);
 }
@@ -185,19 +323,21 @@ function clearCounts(){$$('[data-vote]').forEach(i=>i.value='0');}
 function render(){
  const s=session.state,place=E.destination(s.target),voting=session.mode!=='direct',devices=session.mode==='devices';
  const map=s.map||'worksheet';renderMap(map);
- const p=position(map,E.graph(s)[s.node]);
+ const p=position(map,I.position(s));
  $$('[data-map]').forEach(b=>{const active=b.dataset.map===map;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
  target.value=s.target;$('#mission').textContent=place?`Vamos ${place.phrase}.`:'Vamos explorar a cidade!';
- $('#walker').style.left=p.x/1566*100+'%';$('#walker').style.top=p.y/950*100+'%';$('#walker').dataset.node=s.node;
+ const walker=$('#walker'),oldX=parseFloat(walker.style.left)||p.x/1566*100,oldY=parseFloat(walker.style.top)||p.y/950*100;
+ const duration=Math.min(1800,Math.max(450,Math.hypot(p.x/1566*100-oldX,p.y/950*100-oldY)*35));
+ walker.style.transitionDuration=duration+'ms';walker.style.left=p.x/1566*100+'%';walker.style.top=p.y/950*100+'%';walker.dataset.node=s.node;walker.dataset.edge=s.edge?`${s.edge.a}:${s.edge.b}:${s.edge.t}`:'';
  let d=(s.heading-lastHeading+4)%4;if(d===3)d=-1;rotation+=d*90;lastHeading=s.heading;
- $('#facing').style.transform=`rotate(${rotation}deg)`;
+ $('#facing').style.transitionDelay=d&&Math.hypot(p.x/1566*100-oldX,p.y/950*100-oldY)>1?duration+'ms':'0ms';$('#facing').style.transform=`rotate(${rotation}deg)`;
  drawTrail(s);
  $$('[data-place]').forEach(b=>{b.classList.toggle('selected',b.dataset.place===s.target);b.classList.toggle('arrived',b.dataset.place===s.target&&s.arrived);b.setAttribute('aria-pressed',String(b.dataset.place===s.target));});
  $('#status').textContent=notice||s.last;$('#status').classList.toggle('success',!notice&&s.arrived);
  document.body.classList.toggle('voting',voting);
  $$('[data-mode]').forEach(b=>{const active=b.dataset.mode===session.mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
  $$('.vote-input').forEach(el=>el.hidden=!voting);$('#vote-tools').hidden=!voting;
- $$('[data-command]').forEach(b=>{b.disabled=voting||s.arrived;b.classList.toggle('winner',!!session.round?.outcome&&session.round.outcome===b.dataset.command);});
+ $$('[data-command]').forEach(b=>{const c=I.get((session.choices||I.defaults)[b.dataset.command]);b.querySelector('.command-copy').firstChild.textContent=c.phrase;b.querySelector('small').textContent=c.short;b.querySelector('.arrow').textContent=c.icon;b.disabled=voting||s.arrived;b.classList.toggle('winner',!!session.round?.outcome&&session.round.outcome===b.dataset.command);});
  $$('[data-vote]').forEach(i=>{i.readOnly=devices;if(devices)i.value=session.round?.counts?.[i.dataset.vote]??0;});
  $('#mode-intro').textContent=devices?'學生用裝置揀 A／B／C。老師確認後，人物先行動。':voting?'學生舉手／舉 ABC 卡，老師輸入右邊票數。':'先講葡文，再按指令。';
  $('#open-round').hidden=!devices;$('#open-round').disabled=!!session.round?.open||s.arrived;
@@ -206,6 +346,7 @@ function render(){
  $('#clear-votes').hidden=devices;
  $('#round-info').textContent=devices?(session.round?.open?`第 ${session.round.id} 輪投票中 · 已收到 ${session.round.total} 票`:'投票未開放。按「開始新一輪投票」。'):'每輪只執行一個勝出指令；同票要重投。';
  $('#undo').disabled=!s.history.length;
+ if(window.renderLanguage)window.renderLanguage();
 }
 async function dispatch(kind,data={}){
  if(busy)return;
@@ -222,11 +363,14 @@ async function dispatch(kind,data={}){
  if(kind==='reset')session.state=E.initial(session.state.target,session.state.map);
  if(kind==='undo')session.state=E.undo(session.state);
  if(kind==='mode')session.mode=data.mode;
- if(kind==='action')session.state=E.action(session.state,data.choice);
+ if(kind==='action'){try{session.state=I.run(session.state,(session.choices||I.defaults)[data.choice]);}catch(e){message(e.message);return;}}
+ if(kind==='instruction'){try{session.state=I.run(session.state,data.id);}catch(e){message(e.message);return;}}
+ if(kind==='demo'){session.mode='direct';session.state=I.run(E.initial('','worksheet'),data.id);}
+ if(kind==='choices'){session.choices={...data.choices};session.round=null;}
  if(kind==='apply'){
   const result=E.winner(data.counts);
   if(result.error){message(result.error);return;}
-  session.state=E.action(session.state,result.choice);session.state.last=`${result.choice} 勝出（${data.counts[result.choice]} 票） · ${session.state.last}`;
+  try{session.state=I.run(session.state,(session.choices||I.defaults)[result.choice]);}catch(e){message(e.message);return;}session.state.last=`${result.choice} 勝出（${data.counts[result.choice]} 票） · ${session.state.last}`;
  }
  if(['target','map','reset','mode','apply'].includes(kind))clearCounts();render();
 }
@@ -252,5 +396,88 @@ if(online){
  poll();setInterval(poll,900);
 }
 render();
+</script><script>'use strict';
+(function(){
+let taskIndex=0,chosen=[],model=true,checked=false;
+const taskSelect=$('#sentence-task');
+I.tasks.forEach((t,i)=>{const o=new Option(`${i+1}. ${t.prompt}`,String(i));taskSelect.add(o);});
+const selectors=$('#choice-selectors');
+for(const k of ['A','B','C']){
+ const label=document.createElement('label');label.textContent=k;
+ const select=document.createElement('select');select.dataset.choiceSlot=k;select.setAttribute('aria-label',`投票 ${k} 指令`);
+ for(const c of I.items.filter(c=>c.group!=='scene'))select.add(new Option(c.phrase,c.id));
+ label.append(select);selectors.append(label);
+}
+const bank=$('#instruction-bank');
+for(const [group,name] of [['walk','行幾遠，喺邊度停'],['turn','向邊轉，第幾條街'],['scene','街道生活情境']]){
+ const heading=document.createElement('h3');heading.textContent=name;bank.append(heading);
+ const grid=document.createElement('div');grid.className='instruction-grid';bank.append(grid);
+ for(const c of I.items.filter(x=>x.group===group)){
+  const button=document.createElement('button');button.className='instruction-card';button.dataset.instruction=c.id;
+  const icon=document.createElement('b');icon.textContent=c.icon;
+  const text=document.createElement('span');text.textContent=c.phrase;
+  const small=document.createElement('small');small.textContent=c.zh;
+  button.append(icon,text,small);
+  button.onclick=()=>{if(c.id==='crosswalk'){showCrosswalk();return;}$('#commands-dialog').close();if(session.mode!=='direct'){message('先切到「直接操作」，再試一句完整指令。投票可以用上方設定更換三張牌。');return;}dispatch('instruction',{id:c.id});};
+  grid.append(button);
+ }
+}
+window.renderLanguage=()=>{
+ if($('#commands-dialog').open)return;
+ for(const s of $$('[data-choice-slot]'))if(document.activeElement!==s)s.value=(session.choices||I.defaults)[s.dataset.choiceSlot];
+};
+$('#command-library').onclick=()=>{renderLanguage();$('#commands-dialog').showModal();};
+$('#save-choices').onclick=()=>{const choices=Object.fromEntries($$('[data-choice-slot]').map(s=>[s.dataset.choiceSlot,s.value]));dispatch('choices',{choices});$('#commands-dialog').close();};
+function task(){return I.tasks[taskIndex];}
+function feedback(text,success=false){$('#sentence-feedback').textContent=text;$('#sentence-feedback').classList.toggle('correct',success);}
+function renderSentence(){
+ const t=task();taskSelect.value=String(taskIndex);
+ $('#sentence-prompt').textContent=t.prompt;
+ $('#sentence-model').textContent='例句：'+t.phrase;$('#sentence-model').hidden=!model;
+ $('#with-model').setAttribute('aria-pressed',String(model));$('#without-model').setAttribute('aria-pressed',String(!model));
+ const answer=$('#sentence-answer');answer.replaceChildren();
+ if(!chosen.length){const hint=document.createElement('span');hint.className='answer-placeholder';hint.textContent='點下面嘅詞塊，砌喺呢度。';answer.append(hint);}
+ for(const [i,word] of chosen.entries()){
+  const button=document.createElement('button');button.className='answer-word';button.textContent=word;button.title='移除呢一格';button.onclick=()=>{chosen.splice(i,1);checked=false;renderSentence();feedback('改好之後再核對。');};answer.append(button);
+ }
+ const wordBank=$('#word-bank');wordBank.replaceChildren();
+ const order=t.chunks.map((text,index)=>({text,index})).sort((a,b)=>(a.index*7+3)%t.chunks.length-(b.index*7+3)%t.chunks.length);
+ // Rotate a two-part sentence so the bank does not display the answer in order.
+ if(order.every((c,i)=>c.index===i))order.push(order.shift());
+ for(const part of order){
+  const button=document.createElement('button');button.className='word-tile';button.textContent=part.text;
+  const used=chosen.filter(w=>w===part.text).length>=t.chunks.filter((w,i)=>w===part.text&&i<=part.index).length;
+  button.disabled=used;button.onclick=()=>{chosen.push(part.text);checked=false;renderSentence();feedback('砌好後，按「核對句子」。');};wordBank.append(button);
+ }
+ $('#sentence-undo').disabled=!chosen.length;$('#sentence-demo').disabled=!checked||!t.command;
+ $('#sentence-demo').textContent=t.command==='crosswalk'?'行人線示範':t.command?'由起點試行':'呢句用嚟問路／說明位置';
+}
+function resetSentence(){chosen=[];checked=false;renderSentence();feedback('點詞塊，按次序砌一句。');}
+$('#sentence-class').onclick=()=>{renderSentence();$('#sentence-dialog').showModal();};
+taskSelect.onchange=()=>{taskIndex=Number(taskSelect.value);resetSentence();};
+$('#with-model').onclick=()=>{model=true;renderSentence();};
+$('#without-model').onclick=()=>{model=false;resetSentence();};
+$('#sentence-undo').onclick=()=>{chosen.pop();checked=false;renderSentence();};
+$('#sentence-reset').onclick=resetSentence;
+$('#sentence-check').onclick=()=>{const result=I.check(task().id,chosen);checked=result.ok;renderSentence();feedback(result.message,result.ok);};
+$('#sentence-next').onclick=()=>{taskIndex=(taskIndex+1)%I.tasks.length;resetSentence();};
+$('#sentence-demo').onclick=()=>{if(!checked||!task().command)return;if(task().command==='crosswalk'){showCrosswalk();return;}$('#sentence-dialog').close();dispatch('demo',{id:task().command});};
+$('#sentence-listen').onclick=()=>{
+ if(!('speechSynthesis' in window)){feedback('呢個瀏覽器冇語音功能，請老師讀一次。');return;}
+ const voices=speechSynthesis.getVoices(),voice=voices.find(v=>v.lang.toLowerCase()==='pt-pt');
+ if(!voice){feedback('呢部裝置未有歐洲葡語聲線，請老師讀一次。');return;}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(task().phrase);u.lang='pt-PT';u.voice=voice;u.rate=.8;speechSynthesis.speak(u);
+};
+function showCrosswalk(){
+ const art=$('#facing img').src;$('.crosswalk-pawn').style.backgroundImage=`url("${art}")`;
+ $('#crosswalk-dialog').showModal();
+}
+$('#crosswalk-play').onclick=()=>{
+ const pawn=$('.crosswalk-pawn');pawn.getAnimations().forEach(a=>a.cancel());
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ pawn.animate([{top:'79%'},{top:'22%'}],{duration:reduced?1:2400,easing:'ease-in-out',fill:'forwards'});
+};
+renderLanguage();renderSentence();
+})();
 </script>
 </body></html>

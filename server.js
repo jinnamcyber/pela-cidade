@@ -6,6 +6,7 @@ const os=require('node:os');
 const crypto=require('node:crypto');
 const {execFile}=require('node:child_process');
 const E=require('./src/engine');
+const I=require('./src/instructions');
 
 function createClassroom(options={}){
  const teacherKey=options.teacherKey||crypto.randomBytes(24).toString('hex');
@@ -13,9 +14,9 @@ function createClassroom(options={}){
  const cookieName='mapa_'+room;
  const voters=new Set();
  let votes=new Map(),roundNumber=0;
- let session={state:E.initial(),mode:'direct',round:null,revision:0};
+ let session={state:E.initial(),mode:'direct',round:null,revision:0,choices:{...I.defaults}};
  let urls=[];
- function snapshot(){return {...session,round:session.round?{...session.round,counts:{...session.round.counts}}:null};}
+ function snapshot(){return {...session,choiceLabels:Object.fromEntries(['A','B','C'].map(k=>[k,I.get(session.choices[k])])),round:session.round?{...session.round,counts:{...session.round.counts}}:null};}
  function closeRound(){if(session.round)session.round.open=false;}
  function fail(message,status=400){const e=new Error(message);e.status=status;throw e;}
  function teacher(data){
@@ -34,7 +35,16 @@ function createClassroom(options={}){
    case 'undo':s.state=E.undo(s.state);closeRound();s.round=null;break;
    case 'action':
     if(s.mode!=='direct'||!['A','B','C'].includes(data.choice))fail('請用目前操作方式執行指令。');
-    s.state=E.action(s.state,data.choice);break;
+    try{s.state=I.run(s.state,s.choices[data.choice]);}catch(e){fail(e.message);}break;
+   case 'choices':
+    if(!I.validateChoices(data.choices))fail('請選擇三句地圖指令。');
+    s.choices={...data.choices};closeRound();s.round=null;break;
+   case 'instruction':
+    if(s.mode!=='direct')fail('請先切到直接操作，再試行句子。');
+    try{s.state=I.run(s.state,data.id);}catch(e){fail(e.message);}break;
+   case 'demo':
+    if(!I.get(data.id)||data.id==='crosswalk')fail('指令無效。');
+    try{s.state=I.run(E.initial('','worksheet'),data.id);}catch(e){fail(e.message);}closeRound();s.round=null;s.mode='direct';break;
    case 'open':
     if(s.mode!=='devices'||s.state.arrived||s.round?.open)fail('而家未能開新一輪。');
     votes=new Map();
@@ -51,7 +61,7 @@ function createClassroom(options={}){
     if(devices)closeRound();
     if(result.error){s.state.last=result.error;if(s.round)s.round.outcome=null;}
     else{
-     s.state=E.action(s.state,result.choice);
+     try{s.state=I.run(s.state,s.choices[result.choice]);}catch(e){s.state.last=e.message;s.revision++;return snapshot();}
      s.state.last=`${result.choice} 勝出（${counts[result.choice]} 票） · ${s.state.last}`;
      if(devices)s.round.outcome=result.choice;
     }

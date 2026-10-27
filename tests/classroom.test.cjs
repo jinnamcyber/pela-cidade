@@ -86,7 +86,7 @@ test('classroom HTTP flow: authority, changed votes, ties, stale votes, reset an
  assert.equal((await post('/api/teacher',{kind:'apply',roundId:id},{'X-Teacher-Key':app.teacherKey})).status,409);
  s=await teacher('open');assert.ok(s.round.id>id);id=s.round.id;
  await post('/api/vote',{choice:'B',roundId:id},one);await post('/api/vote',{choice:'B',roundId:id},two);
- s=await teacher('apply',{roundId:id});assert.equal(s.state.node,'12');assert.equal(s.round.outcome,'B');
+ s=await teacher('apply',{roundId:id});assert.equal(s.state.node,'s1');assert.equal(s.state.edge.b,'12');assert.equal(s.round.outcome,'B');
  assert.equal((await get('/api/student',one)).data.myChoice,'B');
  s=await teacher('undo');assert.equal(s.state.node,'s1');assert.equal(s.round,null);
  s=await teacher('open');id=s.round.id;
@@ -95,8 +95,12 @@ test('classroom HTTP flow: authority, changed votes, ties, stale votes, reset an
  assert.equal((await post('/api/vote',{choice:'B',roundId:id},one)).status,409);
  s=await teacher('open');id=s.round.id;s=await teacher('map',{map:'worksheet'});assert.equal(s.state.map,'worksheet');assert.equal(s.round,null);
  assert.equal((await post('/api/vote',{choice:'B',roundId:id},one)).status,409);
- await teacher('mode',{mode:'hands'});s=await teacher('apply',{counts:{A:0,B:10,C:1}});assert.equal(s.state.node,'12');
+ await teacher('mode',{mode:'hands'});s=await teacher('apply',{counts:{A:0,B:10,C:1}});assert.equal(s.state.node,'s1');assert.equal(s.state.edge.b,'12');
  await teacher('mode',{mode:'direct'});s=await teacher('action',{choice:'C'});assert.equal(s.state.heading,1);
  assert.equal((await post('/api/teacher',{kind:'target',target:'missing'},{'X-Teacher-Key':app.teacherKey})).status,400);
  assert.equal((await post('/api/teacher',{kind:'reset'},{'X-Teacher-Key':app.teacherKey,Origin:'https://another.example'})).status,403);
+ await teacher('reset');await teacher('choices',{choices:{A:'forward',B:'junction',C:'end'}});await teacher('mode',{mode:'hands'});
+ s=await teacher('apply',{counts:{A:0,B:5,C:1}});assert.equal(s.state.node,'12');assert.equal(s.choiceLabels.B.phrase,'Vá até ao cruzamento.');
+ s=await teacher('apply',{counts:{A:0,B:1,C:5}});assert.equal(s.state.node,'n1');
+ s=await teacher('demo',{id:'first-right'});assert.equal(s.state.node,'12');assert.equal(s.state.heading,1);assert.equal(s.mode,'direct');
 });

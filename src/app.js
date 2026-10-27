@@ -1,9 +1,9 @@
 'use strict';
-const E=MapEngine,$=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
+const E=MapEngine,I=MapInstructions,$=s=>document.querySelector(s),$$=s=>Array.from(document.querySelectorAll(s));
 const mapImages=JSON.parse($('#map-images').textContent);
 const teacherKey=new URLSearchParams(location.search).get('key');
 const online=location.pathname==='/teacher'&&!!teacherKey;
-let session={state:E.initial(),mode:'direct',round:null,revision:0},lastRevision=-1,busy=false,notice='',lastHeading=0,rotation=0;
+let session={state:E.initial(),mode:'direct',round:null,revision:0,choices:{...I.defaults}},lastRevision=-1,busy=false,notice='',lastHeading=0,rotation=0;
 const target=$('#target');
 target.innerHTML='<option value="">Explorar · 自由探索</option>'+E.places.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
 // Illustration bounds in the same 1566 × 950 space as the movement graph.
@@ -37,8 +37,9 @@ function renderMap(map){
 }
 function drawTrail(s){
  const ctx=$('#trail').getContext('2d'),streets=E.graph(s);
- ctx.clearRect(0,0,1566,950);if(s.path.length<2)return;
+ ctx.clearRect(0,0,1566,950);if(s.path.length<2&&!s.edge)return;
  ctx.beginPath();s.path.forEach((id,i)=>{const p=position(s.map||'worksheet',streets[id]);if(i)ctx.lineTo(p.x,p.y);else ctx.moveTo(p.x,p.y);});
+ if(s.edge){const p=position(s.map||'worksheet',I.position(s));ctx.lineTo(p.x,p.y);}
  ctx.lineCap='round';ctx.lineJoin='round';ctx.setLineDash([]);ctx.lineWidth=13;ctx.strokeStyle='#fbfcf8b3';ctx.stroke();
  ctx.lineWidth=7;ctx.strokeStyle='#205b55';ctx.setLineDash([2,17]);ctx.stroke();ctx.setLineDash([]);
 }
@@ -48,19 +49,21 @@ function clearCounts(){$$('[data-vote]').forEach(i=>i.value='0');}
 function render(){
  const s=session.state,place=E.destination(s.target),voting=session.mode!=='direct',devices=session.mode==='devices';
  const map=s.map||'worksheet';renderMap(map);
- const p=position(map,E.graph(s)[s.node]);
+ const p=position(map,I.position(s));
  $$('[data-map]').forEach(b=>{const active=b.dataset.map===map;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
  target.value=s.target;$('#mission').textContent=place?`Vamos ${place.phrase}.`:'Vamos explorar a cidade!';
- $('#walker').style.left=p.x/1566*100+'%';$('#walker').style.top=p.y/950*100+'%';$('#walker').dataset.node=s.node;
+ const walker=$('#walker'),oldX=parseFloat(walker.style.left)||p.x/1566*100,oldY=parseFloat(walker.style.top)||p.y/950*100;
+ const duration=Math.min(1800,Math.max(450,Math.hypot(p.x/1566*100-oldX,p.y/950*100-oldY)*35));
+ walker.style.transitionDuration=duration+'ms';walker.style.left=p.x/1566*100+'%';walker.style.top=p.y/950*100+'%';walker.dataset.node=s.node;walker.dataset.edge=s.edge?`${s.edge.a}:${s.edge.b}:${s.edge.t}`:'';
  let d=(s.heading-lastHeading+4)%4;if(d===3)d=-1;rotation+=d*90;lastHeading=s.heading;
- $('#facing').style.transform=`rotate(${rotation}deg)`;
+ $('#facing').style.transitionDelay=d&&Math.hypot(p.x/1566*100-oldX,p.y/950*100-oldY)>1?duration+'ms':'0ms';$('#facing').style.transform=`rotate(${rotation}deg)`;
  drawTrail(s);
  $$('[data-place]').forEach(b=>{b.classList.toggle('selected',b.dataset.place===s.target);b.classList.toggle('arrived',b.dataset.place===s.target&&s.arrived);b.setAttribute('aria-pressed',String(b.dataset.place===s.target));});
  $('#status').textContent=notice||s.last;$('#status').classList.toggle('success',!notice&&s.arrived);
  document.body.classList.toggle('voting',voting);
  $$('[data-mode]').forEach(b=>{const active=b.dataset.mode===session.mode;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
  $$('.vote-input').forEach(el=>el.hidden=!voting);$('#vote-tools').hidden=!voting;
- $$('[data-command]').forEach(b=>{b.disabled=voting||s.arrived;b.classList.toggle('winner',!!session.round?.outcome&&session.round.outcome===b.dataset.command);});
+ $$('[data-command]').forEach(b=>{const c=I.get((session.choices||I.defaults)[b.dataset.command]);b.querySelector('.command-copy').firstChild.textContent=c.phrase;b.querySelector('small').textContent=c.short;b.querySelector('.arrow').textContent=c.icon;b.disabled=voting||s.arrived;b.classList.toggle('winner',!!session.round?.outcome&&session.round.outcome===b.dataset.command);});
  $$('[data-vote]').forEach(i=>{i.readOnly=devices;if(devices)i.value=session.round?.counts?.[i.dataset.vote]??0;});
  $('#mode-intro').textContent=devices?'學生用裝置揀 A／B／C。老師確認後，人物先行動。':voting?'學生舉手／舉 ABC 卡，老師輸入右邊票數。':'先講葡文，再按指令。';
  $('#open-round').hidden=!devices;$('#open-round').disabled=!!session.round?.open||s.arrived;
@@ -69,6 +72,7 @@ function render(){
  $('#clear-votes').hidden=devices;
  $('#round-info').textContent=devices?(session.round?.open?`第 ${session.round.id} 輪投票中 · 已收到 ${session.round.total} 票`:'投票未開放。按「開始新一輪投票」。'):'每輪只執行一個勝出指令；同票要重投。';
  $('#undo').disabled=!s.history.length;
+ if(window.renderLanguage)window.renderLanguage();
 }
 async function dispatch(kind,data={}){
  if(busy)return;
@@ -85,11 +89,14 @@ async function dispatch(kind,data={}){
  if(kind==='reset')session.state=E.initial(session.state.target,session.state.map);
  if(kind==='undo')session.state=E.undo(session.state);
  if(kind==='mode')session.mode=data.mode;
- if(kind==='action')session.state=E.action(session.state,data.choice);
+ if(kind==='action'){try{session.state=I.run(session.state,(session.choices||I.defaults)[data.choice]);}catch(e){message(e.message);return;}}
+ if(kind==='instruction'){try{session.state=I.run(session.state,data.id);}catch(e){message(e.message);return;}}
+ if(kind==='demo'){session.mode='direct';session.state=I.run(E.initial('','worksheet'),data.id);}
+ if(kind==='choices'){session.choices={...data.choices};session.round=null;}
  if(kind==='apply'){
   const result=E.winner(data.counts);
   if(result.error){message(result.error);return;}
-  session.state=E.action(session.state,result.choice);session.state.last=`${result.choice} 勝出（${data.counts[result.choice]} 票） · ${session.state.last}`;
+  try{session.state=I.run(session.state,(session.choices||I.defaults)[result.choice]);}catch(e){message(e.message);return;}session.state.last=`${result.choice} 勝出（${data.counts[result.choice]} 票） · ${session.state.last}`;
  }
  if(['target','map','reset','mode','apply'].includes(kind))clearCounts();render();
 }
